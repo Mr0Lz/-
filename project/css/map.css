@@ -1,0 +1,279 @@
+/*清除浮动*/
+*{
+    margin: 0;
+    padding:0;
+    list-style:none;
+    border: 0;
+    text-decoration: none;
+    outline: none;
+}
+img{
+    max-width: 100%;
+    width:100%;
+}
+div:after{
+    content: '';
+    display:block;
+    zoom:1;
+    clear: both;
+}
+html,body{
+    padding:0;
+    width: 100%;
+    height: 100%;
+}
+select,option{
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    text-align-last: center;
+}
+option{
+    background: #082240;
+    color: #fff;
+}
+select::-ms-expand ,option::-ms-expand {
+    display: none;
+}
+.l{
+    float: left;
+}
+.r{
+    float: right;
+}
+.blue{
+    color: #20dbfd;
+}
+/*背景图片*/
+.bigbg{
+    color: #fff;
+    width: 100%;
+    background: url(../images/bigbg.png);
+    background-size: 100%;
+}
+/*头部*/
+.head{
+    position: relative;
+    height: 1rem;
+    line-height: 1rem;
+}
+.head img{
+    width: 32.2%;
+    vertical-align: middle;
+}
+/*select*/
+.timebtn{
+    border: 0px;
+    position: absolute;
+    display: block;
+    background: url(../images/btnbg.png);
+    padding: 0.1rem 1.2rem;
+    background-size: 100%;
+    top: 0.9rem;
+    left: 40%;
+    z-index: 3;
+}
+.timebtn option{
+}
+/*布局*/
+.main-l{
+    float: left;
+    width:14.3rem;
+    padding-left: 0.2rem;
+}
+.main-l-t{
+    height:6.3rem;
+}
+.main-l-b{
+    margin-top: 0.24rem;
+    height:4rem;
+    clear: both;
+    position: relative;
+    -webkit-box-shadow: 0 0 14px #0e59a0;
+    -ms-box-shadow: 0 0 14px #0e59a0;
+    -moz-box-shadow: 0 0 14px #0e59a0;
+    box-shadow: 0 0 14px #0e59a0;
+}
+/*右边栏*/
+.main-r{
+    float: left;
+    width:4.1rem;
+    padding-left: 0.2rem;
+}
+.main-r-t{
+    height:4.87rem;
+}
+.main-r-b{
+    /*height: 5.6rem;*/
+}
+
+/*列表*/
+.h-1{
+    font-size: 0.2rem;
+    font-weight: 600;
+    padding: 0.1rem 0 ;
+}
+.main-list{
+    font-size: 0.14rem;
+}
+.main-list li.list-item{
+    margin-top: 0.04rem;
+    padding:0.1rem 0;
+    background: #0a2340;
+}
+.list-box{
+    overflow: hidden;
+    position:relative;
+    padding-top: 0.34rem;
+}
+.main-l-list ul,.main-r-list ul{
+    display: block;
+    overflow-y: auto;
+}
+.main-l-list li span:first-child {
+    text-align: left;
+    width: 16%;
+}
+.main-l-list li span,.main-r-list li span{
+    display: inline-block;
+    width:25%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.list-h{
+    display: block;
+    width:100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.16rem;
+    padding-bottom: 0.12rem;
+    color: #a5a7ac;
+}
+.main-l-list{
+    width:3.5rem;
+}
+
+/*右侧列表*/
+.main-r-list{
+    width:4rem;
+}
+.main-r-list li span{
+    width: 35%;
+}
+.main-r-list li span:first-child {
+    text-align: center;
+    width: 26%;
+}
+
+/*左侧 上部内容*/
+.main-l-t-center{
+    width:10.6rem;
+}
+
+.box-list{
+    margin-top: 0.5rem;
+}
+/*电子卡*/
+.box-item{
+    width:1.7rem;
+    height: 1.6rem;
+    background:url(../images/boxbg.png);
+    padding:0.2rem  0 0 0.3rem;
+    margin-left: 0.14rem;
+    background-size: 100%;
+    font-size: 0.14rem;
+}
+.box-item:first-child{
+    margin-left: 0;
+}
+.box-item div{
+    padding-bottom: 0.06rem;
+    width:100%;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.box-item .box-item-t{
+    font-size: 0.18rem;
+}
+.box-item .box-item-v{
+    font-size: 0.3rem;
+    font-weight: bold;
+    -webkit-text-shadow: 0px 0px 6px #20dbfd;
+    -ms-text-shadow: 0px 0px 6px #20dbfd;
+    -moz-text-shadow: 0px 0px 6px #20dbfd;
+    text-shadow: 0px 0px 6px #20dbfd;
+}
+/*社康*/
+.box-item2{
+    width: 3.1rem;
+    height: 1.6rem;
+    background: url(../images/boxbg2.png);
+    padding: 0.2rem 0 0 0.3rem;
+    margin-left: 0.14rem;
+    background-size: 100% 100%;
+    font-size: 0.14rem;
+}
+.box-item2:first-child{
+    margin-left: 0;
+}
+.box-item2 div{
+    padding-bottom: 0.06rem;
+    width:100%;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.box-item2 .box-item-t{
+    font-size: 0.18rem;
+}
+.box-item2 .box-item-v{
+    font-size: 0.3rem;
+    font-weight: bold;
+    -webkit-text-shadow: 0px 0px 6px #20dbfd;
+    -ms-text-shadow: 0px 0px 6px #20dbfd;
+    -moz-text-shadow: 0px 0px 6px #20dbfd;
+    text-shadow: 0px 0px 6px #20dbfd;
+}
+
+/*地图*/
+.map-box{
+    width:10.6rem;
+    height: 3.64rem;
+    margin-top: 0.15rem;
+    position: relative;
+}
+.map-box img{
+    position: absolute;
+    width:0.2rem;
+}
+.map-centent{
+    width:100%;
+    height: 100%;
+    background:url(../images/bg.png);
+    background-size: 100%;
+}
+.pie-chart{
+    width:36%;
+    height: 100%;
+}
+.map-chart{
+    width:64%;
+    height: 100%;
+}
+
+/*折柱混合*/
+.columnar-chart{
+    width:48%;
+    height: 100%;
+}
+.columnar-chart-box{
+    width: 100%;
+    height: 90%
+}

@@ -1,0 +1,1537 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./project/css/normalize.css">
+    <script type="text/javascript" src="./project/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="./project/js/echarts.min.js"></script>
+	<script type="text/javascript">
+		//最优先 rem布局代码
+		(function (d, w) {
+		  let docEle = document.documentElement,
+		  resizeE = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		  wResize = function () {
+		      let clientWidth = docEle.clientWidth;
+		      if (!clientWidth) return;
+		      //px转换rem:px/100    设计图1920   基数:100  
+		      docEle.style.fontSize = 100 * (clientWidth / 1920) + 'px';
+		    }
+		    if (!d.addEventListener) return;
+		      w.addEventListener(resizeE , wResize , false);
+		      //在dom加载完后执行一遍
+		      d.addEventListener('DOMContentLoaded' , wResize ,false);
+		    
+		})(document, window)
+	</script>
+	<style type="text/css">
+		/*清除浮动*/
+		*{
+			margin: 0;
+			padding:0;
+			list-style:none;
+			border: 0;
+			text-decoration: none;
+			outline: none;
+		}
+		img{
+			max-width: 100%;
+			width:100%;
+		}
+		div:after{
+			content: '';
+			display:block;
+			zoom:1;
+			clear: both;
+        }
+		html,body{
+			width: 100%;
+			height: 100%;
+		}
+		select,option{
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			appearance:none;
+		    background: transparent;
+		    color: #fff;
+		    text-align: center;
+    		text-align-last: center;
+		}
+		option{
+			background: #082240;
+		    color: #fff;
+		}
+		select::-ms-expand ,option::-ms-expand {
+		 display: none; 
+		}
+		.l{
+			float: left;
+		}
+		.r{
+			float: right;
+		}
+		.blue{
+			color: #20dbfd;
+		}
+		/*背景图片*/
+		.bigbg{
+			color: #fff;
+			width: 100%;
+			background: url(./project/images/bigbg.png);
+			background-size: 100%;
+		}
+		/*头部*/
+		.head{
+			position: relative;
+		    height: 1rem;
+		    line-height: 1rem;
+		}
+		.head img{
+			width: 32.2%;
+    		vertical-align: middle;
+		}
+		/*select*/
+		.timebtn{
+			position: absolute;
+			display: block;
+			background: url(./project/images/btnbg.png);
+			padding: 0.1rem 1.2rem;
+			background-size: 100%;
+			top: 0.9rem;
+			left: 40%;
+			z-index: 3;
+		}
+		.timebtn option{
+		}
+		/*布局*/
+		.main-l{
+			float: left;
+			width:14.3rem;
+			padding-left: 0.2rem;
+		}
+		.main-l-t{
+			height:6.3rem;
+		}
+		.main-l-b{
+			margin-top: 0.24rem;
+			height:4rem;
+			clear: both;
+			position: relative;
+			-webkit-box-shadow: 0 0 14px #0e59a0;
+		    -ms-box-shadow: 0 0 14px #0e59a0;
+		    -moz-box-shadow: 0 0 14px #0e59a0;
+		    box-shadow: 0 0 14px #0e59a0;
+		}
+		/*右边栏*/
+		.main-r{
+			float: left;
+			width:4.1rem;
+			padding-left: 0.2rem;
+		}
+		.main-r-t{
+			height:4.87rem;
+		}
+		.main-r-b{
+			/*height: 5.6rem;*/
+		}
+
+		/*列表*/
+		.h-1{
+			font-size: 0.2rem;
+			font-weight: 600;
+			padding: 0.1rem 0 ;
+		}
+		.main-list{
+			font-size: 0.14rem;
+		}
+		.main-list li.list-item{
+			margin-top: 0.04rem;
+			padding:0.1rem 0;
+			background: #0a2340;
+		}
+		.list-box{
+    		overflow: hidden;
+    		position:relative;
+    		padding-top: 0.34rem;
+		}
+		.main-l-list ul,.main-r-list ul{
+			display: block;
+			overflow-y: auto;
+		}
+		.main-l-list li span:first-child {
+		    text-align: left;
+		    width: 16%;
+		}
+		.main-l-list li span,.main-r-list li span{
+			display: inline-block;
+			width:25%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			text-align: center;
+		}
+		.list-h{
+			display: block;
+			width:100%;
+			position:absolute;
+			top: 0;
+			left: 0;
+			font-size: 0.16rem;
+			padding-bottom: 0.12rem;
+			color: #a5a7ac;
+		}
+		.main-l-list{
+			width:3.5rem;
+		}
+		
+		/*右侧列表*/
+		.main-r-list{
+			width:4rem;
+		}
+		.main-r-list li span{
+			width: 30%;
+		}
+		.main-r-list li span:first-child {
+		    text-align: center;
+		    width: 26%;
+		}
+
+		/*左侧 上部内容*/
+		.main-l-t-center{
+			width:10.6rem;
+		}
+
+		.box-list{
+			margin-top: 0.5rem;
+		}
+		/*电子卡*/
+		.box-item{
+			width:1.7rem;
+			height: 1.6rem;
+			background:url(./project/images/boxbg.png);
+			padding:0.2rem  0 0 0.3rem;
+			margin-left: 0.14rem;
+			background-size: 100%;
+			font-size: 0.14rem;
+		}
+		.box-item:first-child{
+			margin-left: 0;
+		}
+		.box-item div{
+			padding-bottom: 0.06rem;
+			width:100%;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.box-item .box-item-t{
+			font-size: 0.18rem;
+		}
+		.box-item .box-item-v{
+			font-size: 0.3rem;
+			font-weight: bold;
+			-webkit-text-shadow: 0px 0px 6px #20dbfd;
+			-ms-text-shadow: 0px 0px 6px #20dbfd;
+			-moz-text-shadow: 0px 0px 6px #20dbfd;
+			text-shadow: 0px 0px 6px #20dbfd;
+		}
+		/*社康*/
+		.box-item2{
+			width: 3.1rem;
+			height: 1.6rem;
+			background: url(./project/images/boxbg2.png);
+			padding: 0.2rem 0 0 0.3rem;
+			margin-left: 0.14rem;
+			background-size: 100% 100%;
+			font-size: 0.14rem;
+		}
+		.box-item2:first-child{
+			margin-left: 0;
+		}
+		.box-item2 div{
+			padding-bottom: 0.06rem;
+			width:100%;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.box-item2 .box-item-t{
+			font-size: 0.18rem;
+		}
+		.box-item2 .box-item-v{
+			font-size: 0.3rem;
+			font-weight: bold;
+			-webkit-text-shadow: 0px 0px 6px #20dbfd;
+			-ms-text-shadow: 0px 0px 6px #20dbfd;
+			-moz-text-shadow: 0px 0px 6px #20dbfd;
+			text-shadow: 0px 0px 6px #20dbfd;
+		}
+
+		/*地图*/
+		.map-box{
+			width:10.6rem;
+			height: 3.64rem;
+			margin-top: 0.15rem;
+			position: relative;
+		}
+		.map-box img{
+			position: absolute;
+			width:0.2rem;
+		}
+		.map-centent{
+			width:100%;
+			height: 100%;
+			background:url(./project/images/bg.png);
+			background-size: 100%;
+		}
+		.pie-chart{
+			width:36%;
+			height: 100%;
+		}
+		.map-chart{
+			width:64%;
+			height: 100%;
+		}
+
+		/*折柱混合*/
+		.columnar-chart{
+			width:48%;
+			height: 100%;
+		}
+		.columnar-chart-box{
+			width: 100%;
+			height: 90%
+		}
+
+	</style>
+</head>
+<body>
+	<div class="bigbg">
+		<!-- 头部 -->
+		<div class="head">
+			<!-- Timebtn -->
+			<img src="./project/images/h_l.png">
+			<img src="./project/images/t.png">
+			<img src="./project/images/h_r.png">
+			<select name="timebtn" class="timebtn">
+				<option value="本月">本月</option>
+				<option value="本日">本日</option>
+				<option value="本年">本年</option>
+			</select>
+		</div>
+
+		<!-- 内容部 -->
+		<div class="main">
+
+			<!-- 左内容部 -->
+			<div class="main-l">
+				<!-- 左侧上部 -->
+				<div class="main-l-t">
+
+				<!--左侧上部列表  -->
+					<div class="main-list main-l-list l">
+						<div class="h-1">
+							<span>区域支付排行</span>
+							<img src="./project/images/side1.png">
+						</div>
+						<div class="list-box">
+							<ul style="height: 5.1rem;width: 106%;">
+								<li class="list-h">
+									<span>排名</span>
+									<span>区域</span>
+									<span>支付笔数</span>
+									<span>支付金额</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li><li class="list-item">
+									<span>1</span>
+									<span>阿达阿萨德</span>
+									<span class="blue">阿达阿萨德</span>
+									<span class="blue">123123123</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+
+					<div class="main-l-t-center r">
+
+						<div class="box-list">
+
+							<!-- 5个框  -->
+							<!--<div class="box-item l">
+								<div class="box-item-t">发卡量(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 50%">昨日</span>
+									<span style="display: inline-block;width: 50%">昨日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 50%">1231231</span>
+									<span style="display: inline-block;width: 50%">123123</span>
+								</div>
+							</div>
+
+							<div class="box-item l">
+								<div class="box-item-t">预制卡量(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 50%">昨日</span>
+									<span style="display: inline-block;width: 50%">昨日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 50%">1231231</span>
+									<span style="display: inline-block;width: 50%">123123</span>
+								</div>
+							</div>
+
+							<div class="box-item l">
+								<div class="box-item-t">用卡量(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 50%">昨日</span>
+									<span style="display: inline-block;width: 50%">昨日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 50%">1231231</span>
+									<span style="display: inline-block;width: 50%">123123</span>
+								</div>
+							</div>
+
+							<div class="box-item l">
+								<div class="box-item-t">发卡上传量(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 50%">昨日</span>
+									<span style="display: inline-block;width: 50%">昨日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 50%">1231231</span>
+									<span style="display: inline-block;width: 50%">123123</span>
+								</div>
+							</div>
+
+							<div class="box-item l">
+								<div class="box-item-t">用卡上传量(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 50%">昨日</span>
+									<span style="display: inline-block;width: 50%">昨日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 50%">1231231</span>
+									<span style="display: inline-block;width: 50%">123123</span>
+								</div>
+							</div>-->
+
+							<!-- 3个框 -->
+							<div class="box-item2 l">
+								<div class="box-item-t">支付金额(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 30%">年度</span>
+									<span style="display: inline-block;width: 30%">昨日</span>
+									<span style="display: inline-block;width: 30%">今日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 30%">1231231</span>
+									<span style="display: inline-block;width: 30%">123123</span>
+									<span style="display: inline-block;width: 30%">昨日</span>
+								</div>
+							</div>
+
+							<div class="box-item2 l">
+								<div class="box-item-t">支付笔数(本月)</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 30%">年度</span>
+									<span style="display: inline-block;width: 30%">昨日</span>
+									<span style="display: inline-block;width: 30%">今日</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 30%">1231231</span>
+									<span style="display: inline-block;width: 30%">123123</span>
+									<span style="display: inline-block;width: 30%">昨日</span>
+								</div>
+							</div>
+
+							<div class="box-item2 l">
+								<div class="box-item-t">社康总数</div>
+								<div class="box-item-v blue l">1231231231</div>
+								<div>
+									<span style="display: inline-block;width: 30%">本月新增社康数</span>
+								</div>
+								<div>
+									<span style="display: inline-block;width: 30%">1231231</span>
+								</div>
+							</div>
+
+							
+						</div>
+	
+						<!-- 地图 -->
+						<div class="map-box" id="mapBox">
+
+							<!-- 4个角 -->
+							<img style="top: 0;left: 0" src="tl.png" alt="">
+							<img style="bottom: 0;left: 0" src="bl.png" alt="">
+							<img style="right: 0;top: 0" src="tr.png" alt="">
+							<img style="right: 0;bottom: 0" src="br.png" alt="">
+
+							<div class="map-centent">
+								
+								<div class="pie-chart l" id="pieChart">
+									
+								</div>
+								<div class="map-chart r" id="mapChart">
+									
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>		
+
+				</div>
+
+
+				<!-- 左侧底部 -->
+				<div class="main-l-b">
+					
+					<div class="columnar-chart l">
+
+						<div class="h-1" style="margin-left:0.4rem ">
+							<span>社康机构支付排行</span>
+							<img src="./project/images/side2.png" style="width:90%">
+						</div>
+						<!-- 柱折图 -->
+						<div class="columnar-chart-box"   id="columnarChart1"></div>
+
+					</div>
+
+					<div style="height: 80%;width:0.01rem;background:#2a4795;position:absolute;left:50%;top: 10%;"></div>
+
+	
+
+					<div class="columnar-chart r">
+
+						<div class="h-1" style="margin-left:0.4rem">
+							<span>社康支付医院排行</span>
+							<img src="./project/images/side2.png" style="width:90%">
+						</div>
+						<!-- 柱折图 -->
+						<div class="columnar-chart-box"  id="columnarChart2"></div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- 右侧内容部 -->
+			<div class="main-r">
+
+				<div class="main-r-t">
+					
+					<div class="h-1">
+						<span>社康渠道分布</span>
+						<img style="width:94%" src="side1.png">
+					</div>
+
+					<div style="width: 100%;height: 70%;" id="columnarChart3"></div>
+
+				</div>
+
+				<div class="main-r-b" >
+					<!--左侧上部列表  -->
+					<div class="main-list main-r-list">
+
+						<div class="h-1">
+							<span>区域机构数量</span>
+							<img src="./project/images/side1.png">
+						</div>
+						<div class="list-box">
+							<ul style="height: 5rem;width: 105%;">
+
+								<li class="list-h">
+									<span>区域</span>
+									<span>社康总数</span>
+									<span>本月新增社康数</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+								<li class="list-item">
+									<span>1</span>
+									<span>1</span>
+									<span class="blue">阿达阿萨德</span>
+								</li>
+
+							</ul>
+						</div>
+
+					</div>
+					
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+
+
+
+
+$(function () {
+	
+
+//城市的配置
+var cityConfig = {
+        '龙华区':{
+        	color:'#7947a8'
+        },
+        '光明区':{
+        	color:'#159a8c'
+        },
+        '大鹏新区':{
+        	color:'#124292'
+        },
+        '坪山区':{
+        	color:'#474dad'
+        },
+        '龙岗区':{
+        	color:'#a14b0b'
+        },
+        '盐田区':{
+        	color:'#7d9a1d'
+        },
+        '罗湖区':{
+        	color:'#3a7cd5'
+        },
+        '福田区':{
+        	color:'#a16c0b'
+        },
+        '南山区':{
+        	color:'#1ca8eb'
+        },
+        '宝安区':{
+        	color:'#01d0fe'
+        }
+}
+
+
+
+
+// 地图渲染
+var guangdong = "./guangdong.json";
+var shenzhen = "./shenzhenshi.json";
+
+
+echarts.extendsMap = function(id, opt){
+    // 实例
+    var chart = this.init(document.getElementById(id));
+    chart.showLoading();
+
+    var curGeoJson = {};
+    //下钻的json数据
+    var cityMap = {
+        "深圳市": shenzhen,
+    };
+    //点的位置
+    var geoCoordMap = {
+        '深圳市': [ 114.027099609375,22.717923537632178],
+        '龙华区': [114.027099609375,22.717923537632178],
+        '光明区':[113.93852233886719,22.77301594961187],
+        '大鹏新区':[114.50431823730469,22.607038308040828],
+        '坪山区':[114.35050964355469,22.67738161936916],
+        '龙岗区':[114.25437927246094,22.743889395219064],
+        '盐田区':[114.27635192871094,22.574072303523796],
+        '罗湖区':[114.14794921875,22.553781610660607],
+        '福田区':[114.04769897460938,22.52016858599439],
+        '南山区':[113.96186828613281,22.585484505801283],
+        '宝安区':[113.82865905761719,22.642531328085155]
+    };
+    //点的颜色
+    var cityConfig = opt.cityConfig ||  {
+        color : 'rgba(241, 109, 115, .8)',
+        color : 'rgba(255, 235, 59, .7)',
+        color : 'rgba(147, 235, 248, 1)'
+    };
+
+    //默认配置
+	var defaultOpt = {
+		mapName: 'china',     // 地图展示
+		goDown: false,        // 是否下钻
+		bgColor: '#404a59',   // 画布背景色
+        activeArea: [],       // 区域高亮,同echarts配置项
+        data: [],
+        // 下钻回调(点击的地图名、实例对象option、实例对象)
+        callback: function(name, option, instance){}
+	};
+	if(opt) opt = this.util.extend(defaultOpt, opt);
+	
+	// 层级索引  标题
+	var name = [opt.mapName];
+	var idx = 0;
+	var pos = {
+		leftPlus: 50,//2级标题偏移
+		leftCur: 8,//2级标题偏移
+		left: 0,//1级标题偏移
+		top: 10//1级标题偏移
+	};
+    
+    //标题的箭头
+	var line = [[0, 0], [8, 11], [0, 22]];
+    // style 通用的样式
+	var style = {
+		font: '18px "Microsoft YaHei", sans-serif',
+		textColor: '#eee',
+		lineColor: 'rgba(147, 235, 248, .8)'
+	};
+
+    var handleEvents = {
+        /**
+         * i 实例对象
+         * o option
+         * n 地图名
+        **/
+        resetOption: function(i, o, n){
+            var breadcrumb = this.createBreadcrumb(n);//设置标题组件
+            
+            var j = name.indexOf(n);
+            var l = o.graphic.length;
+            if(j < 0){
+                o.graphic.push(breadcrumb);
+                o.graphic[0].children[0].shape.x2 = 145;
+                o.graphic[0].children[1].shape.x2 = 145;
+                if(o.graphic.length > 2){
+                    for(var x = 0; x < opt.data.length; x++){
+                        if(n === opt.data[x].name + '市'){
+                            o.series[0].data = handleEvents.initSeriesData([opt.data[x]]);
+                            break;
+                        }else o.series[0].data = [];
+                    }
+                };
+                name.push(n);
+                idx++;
+            }else{
+                o.graphic.splice(j + 2, l);
+                if(o.graphic.length <= 2){
+                    o.graphic[0].children[0].shape.x2 = 60;
+                    o.graphic[0].children[1].shape.x2 = 60;
+                    o.series[0].data = handleEvents.initSeriesData(opt.data);
+                };
+                name.splice(j + 1, l);
+                idx = j;
+                pos.leftCur -= pos.leftPlus * (l - j - 1);
+            };
+
+            o.geo.map = n;
+            o.geo.zoom = 0.4;
+            i.clear();
+            i.setOption(o);
+            this.zoomAnimation();
+            opt.callback(n, o, i);
+        },
+
+        /**
+         * name 地图名  标题组件
+        **/
+        createBreadcrumb: function(name){
+            var cityToPinyin = {
+                "深圳市": "shenzhen",//地图中文 : 地图拼音设置
+            };
+            var breadcrumb = {
+                type: 'group',
+                id: name,
+                left: pos.leftCur + pos.leftPlus,
+                top: pos.top + 3,
+                children: [{
+                    type: 'polyline',
+                    left: -90,
+                    top: -5,
+                    shape: {
+                        points: line
+                    },
+                    style: {
+                        stroke: '#fff',
+                        key: name
+                        // lineWidth: 2,
+                    },
+                    onclick: function(){
+                        var name = this.style.key;
+                        handleEvents.resetOption(chart, option, name);
+                    }
+                }, {
+                    type: 'text',
+                    left: -68,
+                    top: 'middle',
+                    style: {
+                        text: name,
+                        textAlign: 'center',
+                        fill: style.textColor,
+                        font: style.font
+                    },
+                    onclick: function(){
+                        var name = this.style.text;
+                        handleEvents.resetOption(chart, option, name);
+                    }
+                }, {
+                    type: 'text',
+                    left: -68,
+                    top: 10,
+                    style: {
+
+                        name: name,
+                        text: cityToPinyin[name] ? cityToPinyin[name].toUpperCase() : '',
+                        textAlign: 'center',
+                        fill: style.textColor,
+                        font: '12px "Microsoft YaHei", sans-serif',
+                    },
+                    onclick: function(){
+                        // console.log(this.style);
+                        var name = this.style.name;
+                        handleEvents.resetOption(chart, option, name);
+                    }
+                }]
+            }
+
+            pos.leftCur += pos.leftPlus;
+
+            return breadcrumb;
+        },
+
+        // 设置effectscatter
+        initSeriesData: function(data){
+            var temp = [];
+            for(var i = 0;i < data.length;i++){
+                var geoCoord = geoCoordMap[data[i].name];
+                if(geoCoord){
+                    temp.push({
+                        name: data[i].name,
+                        value: geoCoord.concat(data[i].value, data[i].level)
+                    });
+                }
+            };
+            console.log(JSON.stringify(temp),'data')
+            return temp;
+        },
+
+        zoomAnimation: function(){
+            var count = null;
+            var zoom = function(per){
+                if(!count) count = per;
+                count = count + per;
+                // console.log(per,count);
+                chart.setOption({
+                    geo: {
+                        zoom: count
+                    }
+                });
+                if(count < 1) window.requestAnimationFrame(function(){
+                    zoom(0.2);
+                });
+            };
+            window.requestAnimationFrame(function(){
+                zoom(0.2);
+            });
+        }
+    };
+    
+    //初始化标题的配置
+    var option = {
+    	backgroundColor: opt.bgColor,
+    	graphic: [{  //左上角按钮
+    		type: 'group',
+        }],
+        geo: {//地图块
+        	map: opt.mapName,
+            roam: true,//拖动,鼠标滚轴
+            zoom: 1.3,
+        	label: {
+                normal: {
+                    show: true,//地图块中的名字
+                    textStyle: {
+                        color: '#fff',
+                        fontSize : "10"
+                    }
+                },
+                emphasis: {
+                    textStyle: {//地图块中的名字 的 hover 
+                        color: '#fff'
+                    }
+                }
+            },
+            itemStyle: {//每个地图块
+                normal: {
+                    //borderColor: 'rgba(147, 235, 248, 1)',//每个地图块的边框颜色
+                    borderColor: '#5491be',
+                    borderWidth: 1,
+                    areaColor: {//填充的颜色
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.8,
+                        colorStops: [{
+                            offset: 0, 
+                            //color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                            color: '#174e87'
+                        }, {
+                            offset: 1, 
+                            //color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                            color: '#356798'
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)',
+                    // shadowColor: 'rgba(255, 255, 255, 1)',
+                    // shadowOffsetX: -2,
+                    // shadowOffsetY: 2,
+                    // shadowOffsetX: -1,
+                    // shadowOffsetY: 1,
+                    // shadowBlur: 10
+                },
+                emphasis: {//每个地图块的hover
+                    areaColor: '#389BB7',
+                    borderWidth: 0
+                }
+            },
+            regions: opt.activeArea.map(function(item){
+                if(typeof item !== 'string'){
+                    return {
+                        name: item.name,
+                        itemStyle: {
+                            normal: {
+                                areaColor: item.areaColor || '#389BB7'
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: item.showLabel,
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    return {
+                        name: item,
+                        itemStyle: {
+                            normal: {
+                                borderColor: '#91e6ff',
+                                areaColor: '#389BB7'
+                            }
+                        }
+                    }
+                }
+            })
+        },
+        tooltip : {
+            formatter: function (params, ticket, callback) {
+                return params.name+"<br>value:"+params.value[2];
+            }
+        },
+        series: [{//数据点的样式
+            name: 'point',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            // symbol: 'diamond',
+            showEffectOn: 'render',
+            rippleEffect: {
+                period: 6,
+                scale: 3,
+                brushType: 'fill'
+            },
+            hoverAnimation: true,
+            itemStyle: {
+                normal: {
+                    color: function(params){
+                    	console.log(params.name)
+                        return cityConfig[params.name].color;
+                    },
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: handleEvents.initSeriesData(opt.data)
+        }]
+    };
+    chart.hideLoading();
+    chart.setOption(option);
+    // 添加事件
+    chart.on('click', function(params){
+        var _self = this;
+    	if(opt.goDown && params.name !== name[idx]){
+            if(cityMap[params.name]){
+                var url = cityMap[params.name];
+                $.get(url, function(response){
+                    // console.log(response);
+                    curGeoJson = response;
+                    echarts.registerMap(params.name, response);
+                    handleEvents.resetOption(_self, option, params.name);
+                });
+            }
+    	}
+    });
+
+    chart.setMap = function(mapName){
+        var _self = this;
+        if(mapName.indexOf('市') < 0) mapName = mapName + '市';
+        var citySource = cityMap[mapName];
+        if(citySource){
+            var url = './map/' + citySource + '.json';
+            $.get(url, function(response){
+                // console.log(response);
+                curGeoJson = response;
+                echarts.registerMap(mapName, response);
+                handleEvents.resetOption(_self, option, mapName);
+            });
+        }
+         handleEvents.resetOption(this, option, mapName);
+    };
+
+    return chart;
+};
+
+var mapChart;
+$.getJSON(shenzhen, function(geoJson){
+    echarts.registerMap('深圳市', geoJson);
+    mapChart = echarts.extendsMap('mapChart', {
+    	//bgColor: '#154e90', // 画布背景色
+        bgColor: 'rgba(0,0,0,0)' ,
+    	mapName: '深圳市',    // 地图名
+    	goDown: false,       // 是否下钻
+    	// 下钻回调
+    	callback: function(name, option, instance){
+    		console.log(name, option, instance);
+    	},
+    	cityConfig:cityConfig,
+        // 数据展示            	
+    	data: [
+            {
+        	   name: '龙华区',
+        	   value: 1,
+            },
+            {
+                name:'光明区',
+                value: 2,
+            },
+            {
+                name:'大鹏新区',
+                value: 3,
+            },
+            {
+                name:'坪山区',
+                value: 4,
+            },
+            {
+                name:'龙岗区',
+                value: 5,
+            },
+            {
+                name:'盐田区',
+                value: 6,
+            },
+            {
+                name:'罗湖区',
+                value: 7,
+            },
+            {
+                name:'福田区',
+                value: 8,
+            },
+            {
+                name:'南山区',
+                value: 9,
+            },
+            {
+                name:'宝安区',
+                value: 10,
+            },
+        ]
+    });
+
+
+});
+//地图 end
+
+
+//pie 饼图
+var pieOption = {
+    tooltip : {
+        trigger: 'item',
+        textStyle: {
+            color: '#fff'
+         },
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    // legend: {
+    // 	textStyle:{
+    // 		color : '#fff'
+    // 	},
+	   //  data: ['龙华区','福田区','宝安区','龙岗区','盐田区','大坪区','南山区','大鹏新区','罗湖区','光明区']
+    // },
+    series : [
+        {
+            name: '深圳区域数据',
+            label:{
+            	show:true,
+            	position : 'outside',
+            	fontSize : 10,
+            },
+            type: 'pie',
+            radius: 90,
+            data:[
+                {value:335, name:'龙华区',itemStyle:{color:cityConfig['龙华区'].color}},
+                {value:310, name:'福田区',itemStyle:{color:cityConfig['福田区'].color}},
+                {value:234, name:'宝安区',itemStyle:{color:cityConfig['宝安区'].color}},
+                {value:135, name:'龙岗区',itemStyle:{color:cityConfig['龙岗区'].color}},
+                {value:48, name:'盐田区',itemStyle:{color:cityConfig['盐田区'].color}},
+                {value:35, name:'坪山区',itemStyle:{color:cityConfig['坪山区'].color}},
+                {value:10, name:'南山区',itemStyle:{color:cityConfig['南山区'].color}},
+                {value:24, name:'大鹏新区',itemStyle:{color:cityConfig['大鹏新区'].color}},
+                {value:15, name:'罗湖区',itemStyle:{color:cityConfig['罗湖区'].color}},
+                {	value:18, 
+                	name:'光明区',
+                	itemStyle:{
+                		color:cityConfig['光明区'].color
+                	}
+            	},
+            ],
+            labelLine :{
+            	length :6,
+            	length2 :4
+            },
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+
+
+//判断是否释放
+// if(!myChart2.isDisposed()){
+//     console.log(&apos;xh&apos;);
+//     // myChart2.dispose();
+//     myChart2.clear()
+// }
+// myChart2.setOption(option2);
+
+
+
+
+
+
+
+
+
+
+//折柱混合
+function columnarChartOption (opt){
+
+	var option = {
+	    tooltip: {
+	        trigger: 'axis',
+	        axisPointer: {
+	            type: 'cross',
+	            crossStyle: {
+	                color: '#fff'
+	            }
+	        }
+	    },
+	    // toolbox: {
+	    //     feature: {
+	    //         dataView: {show: true, readOnly: false},
+	    //         magicType: {show: true, type: ['line', 'bar']},
+	    //         restore: {show: true},
+	    //         saveAsImage: {show: true}
+	    //     }
+	    // },
+	    legend: {
+	        data:['蒸发量','平均温度'],
+	        left:20,
+	        textStyle:{
+	        	color:'#fff',
+	        	fontSize:10
+	        },
+	        itemWidth : 10,
+	        itemHeight : 10
+	    },
+	    xAxis: [
+	        {
+	            type: 'category',
+	            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+	            axisPointer: {
+	                type: 'shadow'
+	            },
+	            axisLabel: {
+		            show: true,
+		            textStyle: {
+		                color: "#fff" //轴文字颜色
+		            }
+		        },
+		        nameTextStyle: {
+                	color: "#fff"
+            	},
+            	axisLine : {
+            		//轴线
+            	},
+            	axisTick : {
+            		//刻度
+            		show : false
+            	}
+
+	        }
+	    ],
+	    yAxis: [
+	        {
+	            type: 'value',
+	            name: '水量',
+	            min: 0,
+	            max: 250,
+	            interval: 50,
+	            axisLabel: {
+	                formatter: '{value} ml',
+	                textStyle: {
+		                color: "#fff" //轴文字颜色
+		            }
+	            },
+	            nameTextStyle: {
+                	color: "#fff"
+            	},
+            	splitLine : {
+            		//网格线
+            		show : false
+            	},
+            	axisTick : {
+            		//刻度
+            		show : false
+            	},
+            	axisLabel : {
+            		show :false
+            	}
+	        },
+	        {
+	            type: 'value',
+	            name: '温度',
+	            min: 0,
+	            max: 25,
+	            interval: 5,
+	            axisLabel: {
+	                formatter: '{value} °C',
+	                textStyle: {
+		                color: "#fff" //轴文字颜色
+		            }
+	            },
+	            nameTextStyle: {
+                	color: "#fff"
+            	},
+            	splitLine : {
+            		//网格线
+            		show : false
+            	},
+            	axisTick : {
+            		//刻度
+            		show : false
+            	},
+            	axisLabel : {
+            		show :false
+            	}
+	        }
+	    ],
+	    series: [
+	       { // For shadow
+	            type: 'bar',
+	            itemStyle: {
+	                normal: {color: '#1f3459'}
+	            },
+	            barGap:'-100%',
+	            tooltip: {
+                	show:false
+            	},
+	            data: [250,250,250,250,250,250,250,250,250,250,250,250],
+	            animation: false
+	        },
+	        {
+	            name:'蒸发量',
+	            type:'bar',
+	            itemStyle : {
+	            	// 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
+					color: {
+					    type: 'linear',
+					    x: 0.5,
+					    y: 0.5,
+					    x2: 1,
+					    y2: 0.5,
+					    colorStops: [{
+					        offset: 0, color: '#75d9ea' // 0% 处的颜色
+					    }, {
+					        offset: 1, color: '#0381ff' // 100% 处的颜色
+					    }],
+					    global: false // 缺省为 false
+					}
+	            },
+	            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+	        },
+	        {
+	            name:'平均温度',
+	            type:'line',
+	            itemStyle : {
+	            	color : "#fff"
+	            },
+	            yAxisIndex: 1,
+	            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+	        }
+	    ]
+	};
+
+
+	return option;
+}
+
+
+
+
+
+var pieChart=null,columnarChart1=null,columnarChart2=null,columnarChart3=null;
+
+window.onload  =   function () {
+
+//必须在这里初始化 echart
+ 	pieChart = echarts.init(document.getElementById('pieChart'));
+	pieChart.setOption(pieOption);
+
+	columnarChart1=echarts.init(document.getElementById('columnarChart1'));
+	columnarChart1.setOption(columnarChartOption());
+
+	columnarChart2=echarts.init(document.getElementById('columnarChart2'));
+	columnarChart2.setOption(columnarChartOption());
+
+	columnarChart3=echarts.init(document.getElementById('columnarChart3'));
+	columnarChart3.setOption(columnarChartOption());
+
+}
+
+
+
+// 适应屏幕
+window.onresize=function () {
+	pieChart.resize();
+	mapChart.resize();
+	columnarChart1.resize();
+	columnarChart2.resize();
+	columnarChart3.resize();
+}
+
+
+
+// 数值转换   3为加,  大于等于7为 加单位(万)
+
+        function format_number(n){
+            if(isNaN(Number(n))){ return 0;}
+            var b=parseInt(n).toString();
+            var len=b.length;
+            var w = '', f = '' ;
+            if(len>=7){
+                //大于7 要加 万字
+                w = '万';
+                f = '.' + ((b/10000).toFixed(2)).toString().split('.')[1];
+                console.log('f',f);
+                b = b.slice(0,b.length-4);
+                len = b.length;
+            }
+
+            if(len<=3){return b+f+w;}
+
+            var r=len%3,s = r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{3}/g).join(","):b.slice(r,len).match(/\d{3}/g).join(",");
+
+            return s+f+w;
+        }
+
+        format_number('8012345.66')
+
+
+
+// script end
+});
+
+</script>
+</html>
