@@ -47,6 +47,19 @@ select::-ms-expand ,option::-ms-expand {
 .blue{
     color: #20dbfd;
 }
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #fff;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox + */
+  color: #fff;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #fff;
+}
 /*背景图片*/
 .bigbg{
     color: #fff;
@@ -56,42 +69,92 @@ select::-ms-expand ,option::-ms-expand {
 }
 /*头部*/
 .head{
-    position: relative;
-    height: 1rem;
-    line-height: 1rem;
+    font-size: 0.16rem;
+}
+.head-bg{
+    text-align: center;
+    padding: 0.2rem 0;
 }
 .head img{
-    width: 32.2%;
+    width: 30%;
+    padding: 0 0.2rem;
     vertical-align: middle;
 }
-/*select*/
-.timebtn{
-    border: 0px;
+/*时间选择按钮*/
+
+.time-container{
+    text-align: center;
+}
+.time-list-btns,.time-data{
+    display: inline-block;
+    border: 1px solid #07a6ff;
+    border-radius: 6px;
+}
+.time-list-btns{
+    overflow: hidden;
+}
+.time-data{
+    position: relative;
+    margin-left:0.2rem; 
+}
+.time-list-btns a,.time-input input{
+    display: inline-block;
+    text-align: center;
+    float: left;
+    color: #fff;
+    padding:0.1rem 0.3rem 0.1rem 0.3rem; 
+}
+.time-input {
+    background: url(../images/sj.png) no-repeat;
+    background-position: 90% center;
+    background-size: 0.16rem;
+}
+.laydate-box {
+    display: none;
     position: absolute;
-    display: block;
-    background: url(../images/btnbg.png);
-    padding: 0.1rem 1.2rem;
-    background-size: 100%;
-    top: 0.9rem;
-    left: 40%;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 3;
 }
-.timebtn option{
+.time-data:hover .laydate-box{
+    display: block;
 }
+.time-input input {
+    text-align:left;
+    padding-top:0.11rem; 
+    background:transparent;
+    padding-right: 0.6rem;
+}
+.time-list-btns a{
+    border-left: 1px solid #07a6ff;
+}
+.time-list-btns a:first-child{
+    border-left: 0px;
+}
+.time-btn-act{
+    background-color: #07a6ff;
+}
+
 /*布局*/
+.main{
+    padding-bottom: 0.2rem;
+}
 .main-l{
     float: left;
     width:14.3rem;
     padding-left: 0.2rem;
 }
 .main-l-t{
-    height:6.3rem;
+    height:6.2rem;
 }
-.main-l-b{
-    margin-top: 0.24rem;
-    height:4rem;
+.main-b{
+    padding-top: 0.2rem;
+    height:3.8rem;
     clear: both;
     position: relative;
+    width: 98%;
+    margin:0 auto;
     -webkit-box-shadow: 0 0 14px #0e59a0;
     -ms-box-shadow: 0 0 14px #0e59a0;
     -moz-box-shadow: 0 0 14px #0e59a0;
@@ -104,17 +167,12 @@ select::-ms-expand ,option::-ms-expand {
     padding-left: 0.2rem;
 }
 .main-r-t{
-    height:4.87rem;
-}
-.main-r-b{
-    /*height: 5.6rem;*/
 }
 
 /*列表*/
 .h-1{
     font-size: 0.2rem;
     font-weight: 600;
-    padding: 0.1rem 0 ;
 }
 .main-list{
     font-size: 0.14rem;
@@ -176,65 +234,36 @@ select::-ms-expand ,option::-ms-expand {
     width:10.6rem;
 }
 
-.box-list{
-    margin-top: 0.5rem;
-}
-/*电子卡*/
-.box-item{
-    width:1.7rem;
-    height: 1.6rem;
-    background:url(../images/boxbg.png);
-    padding:0.2rem  0 0 0.3rem;
-    margin-left: 0.14rem;
-    background-size: 100%;
-    font-size: 0.14rem;
-}
-.box-item:first-child{
-    margin-left: 0;
-}
-.box-item div{
-    padding-bottom: 0.06rem;
-    width:100%;
-    overflow:hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.box-item .box-item-t{
-    font-size: 0.18rem;
-}
-.box-item .box-item-v{
-    font-size: 0.3rem;
-    font-weight: bold;
-    -webkit-text-shadow: 0px 0px 6px #20dbfd;
-    -ms-text-shadow: 0px 0px 6px #20dbfd;
-    -moz-text-shadow: 0px 0px 6px #20dbfd;
-    text-shadow: 0px 0px 6px #20dbfd;
-}
+
 /*社康*/
-.box-item2{
+.box-list{
+    margin-top: 0.3rem;
+}
+.box-item{
     width: 3.1rem;
     height: 1.6rem;
     background: url(../images/boxbg.png);
     padding: 0.2rem 0 0 0.3rem;
     margin-left: 0.14rem;
     background-size: 100% 100%;
-    font-size: 0.14rem;
+    font-size: 0.2rem;
 }
-.box-item2:first-child{
+.box-item:first-child{
     margin-left: 0;
 }
-.box-item2 div{
-    padding-bottom: 0.06rem;
+.box-item div{
     width:100%;
     overflow:hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.box-item2 .box-item-t{
-    font-size: 0.18rem;
+.box-item .box-item-t{
+    margin-top: 0.2rem;
+    font-size: 0.2rem;
 }
-.box-item2 .box-item-v{
-    font-size: 0.3rem;
+.box-item .box-item-v{
+    margin-top: 0.2rem;
+    font-size: 0.4rem;
     font-weight: bold;
     -webkit-text-shadow: 0px 0px 6px #20dbfd;
     -ms-text-shadow: 0px 0px 6px #20dbfd;
@@ -270,10 +299,10 @@ select::-ms-expand ,option::-ms-expand {
 
 /*折柱混合*/
 .columnar-chart{
-    width:48%;
+    width:40%;
     height: 100%;
 }
 .columnar-chart-box{
     width: 100%;
-    height: 90%
+    height: 80%;
 }

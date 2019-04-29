@@ -1,0 +1,255 @@
+/*清除浮动*/
+*{
+    margin: 0;
+    padding:0;
+    list-style:none;
+    border: 0;
+    text-decoration: none;
+    outline: none;
+}
+img{
+    max-width: 100%;
+    width:100%;
+}
+div:after{
+    content: '';
+    display:block;
+    zoom:1;
+    clear: both;
+}
+html,body{
+    padding:0;
+    width: 100%;
+    height: 100%;
+}
+select,option{
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    text-align-last: center;
+}
+option{
+    background: #082240;
+    color: #fff;
+}
+select::-ms-expand ,option::-ms-expand {
+    display: none;
+}
+.l{
+    float: left;
+}
+.r{
+    float: right;
+}
+.blue{
+    color: #20dbfd;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #fff;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox + */
+  color: #fff;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #fff;
+}
+/*背景图片*/
+.bigbg{
+    color: #fff;
+    width: 100%;
+    background: url(../images/bigbg.png);
+    background-size: 100%;
+}
+/*头部*/
+.head{
+    font-size: 0.16rem;
+}
+.head-bg{
+    text-align: center;
+    padding: 0.2rem 0;
+}
+.head img{
+    width: 32.2%;
+    vertical-align: middle;
+}
+/*时间选择按钮*/
+
+.time-container{
+    text-align: center;
+}
+.time-list-btns,.time-data{
+    display: inline-block;
+    border: 1px solid #07a6ff;
+    border-radius: 6px;
+}
+.time-list-btns{
+    overflow: hidden;
+}
+.time-data{
+    position: relative;
+    margin-left:0.2rem; 
+}
+.time-list-btns a,.time-input input{
+    display: inline-block;
+    text-align: center;
+    float: left;
+    color: #fff;
+    padding:0.1rem 0.3rem 0.1rem 0.3rem; 
+}
+.time-input {
+    background: url(../images/sj.png) no-repeat;
+    background-position: 90% center;
+    background-size: 0.16rem;
+}
+.laydate-box {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+.time-data:hover .laydate-box{
+    display: block;
+}
+.time-input input {
+    text-align:left;
+    padding-top:0.11rem; 
+    background:transparent;
+    padding-right: 0.6rem;
+}
+.time-list-btns a{
+    border-left: 1px solid #07a6ff;
+}
+.time-list-btns a:first-child{
+    border-left: 0px;
+}
+.time-btn-act{
+    background-color: #07a6ff;
+}
+
+/*布局*/
+.main{
+    padding:0 0.24rem 0.24rem 0.24rem;
+    font-size: 0.16rem;
+}
+.main-t>div{
+    float: left;
+}
+/*列表*/
+.h-1{
+    font-size: 0.2rem;
+    font-weight: 600;
+}
+.main-list{
+    font-size: 0.14rem;
+}
+.main-list li.list-item{
+    margin-top: 0.04rem;
+    padding:0.1rem 0;
+    background: #0a2340;
+}
+.list-box{
+    overflow: hidden;
+    position:relative;
+    padding-top: 0.34rem;
+}
+.main-list ul,.main-r-list ul{
+    display: block;
+    overflow-y: auto;
+}
+.main-list li span:first-child {
+    text-align: left;
+    width: 16%;
+}
+.main-list li span{
+    display: inline-block;
+    width:25%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.list-h{
+    display: block;
+    width:100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.16rem;
+    padding-bottom: 0.12rem;
+    color: #a5a7ac;
+}
+
+
+/*电子健康卡*/
+.main-t-c{
+    width: 10.67rem;
+    margin-left: 0.24rem;
+}
+.box-list{
+    margin-top: 0.2rem;
+}
+.box-item{
+    width: 3.2rem;
+    height: 1rem;
+    margin-bottom: 0.16rem;
+    padding: 0.2rem 0 0 0.24rem;
+    background: url(../images/boxbg.png);
+    margin-left: 0.14rem;
+    background-size: 100% 100%;
+    font-size: 0.2rem;
+}
+.box-item:first-child{
+    margin-left: 0;
+}
+.box-item div{
+    width:100%;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.box-item .box-item-t{
+    font-size: 0.2rem;
+}
+.box-item .box-item-v{
+    font-size: 0.4rem;
+    font-weight: bold;
+    -webkit-text-shadow: 0px 0px 6px #20dbfd;
+    -ms-text-shadow: 0px 0px 6px #20dbfd;
+    -moz-text-shadow: 0px 0px 6px #20dbfd;
+    text-shadow: 0px 0px 6px #20dbfd;
+}
+/*深圳地图*/
+.map-box{
+    width:100%;
+    height: 3.64rem;
+    position: relative;
+}
+.map-box img{
+    position: absolute;
+    width:0.2rem;
+}
+.map-centent{
+    width:100%;
+    height: 100%;
+    background:url(../images/bg.png);
+    background-size: 100%;
+}
+.map-chart{
+    width:100%;
+    height: 100%;
+}
+
+/*上部 右侧*/
+.main-t-r{
+    width: 4rem;
+    margin-left: 0.2rem;
+}

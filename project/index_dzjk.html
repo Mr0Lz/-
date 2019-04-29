@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="./css/map.css">
+	<link rel="stylesheet" href="./css/map_dzjk.css">
 	<script type="text/javascript">
 	        //最优先 rem布局代码
 	        (function (d, w) {
@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="./js/echarts.min.js"></script>
     <script type="text/javascript" src="./js/template.js"></script>
-
+	<script type="text/javascript" src="./js/laydate/laydate.js"></script>
 	<script type="text/javascript" >
 	    //地图对象
 	    echarts.extendsMap = function(id, opt){
@@ -432,197 +432,155 @@
 	<div class="bigbg">
     <!-- 头部 -->
     <div class="head">
+		<div class="head-bg">
+	        <img src="./images/h_l.png">
+	        <img src="./images/dzjk.png" style="width: 23%;padding:0 5%;">
+	        <img src="./images/h_r.png">
+		</div>
         <!-- Timebtn -->
-        <img src="./images/h_l.png">
-        <img src="./images/zf.png">
-        <img src="./images/h_r.png">
-        <select name="timebtn" class="timebtn" id="timebtn">
-            <#--1：月；2：年-->
-            <option value="1">本月</option>
-            <option value="2">本年</option>
-        </select>
+  		<div class="time-container">
+				<div class="time-list-btns">
+					<a class="time-btn-act" href="javascript:;" data-flage="1" >本月</a>
+					<a href="javascript:;" data-flage="2" >本年</a>
+					<a href="javascript:;" data-flage="3" >最近7天</a>
+					<a href="javascript:;" data-flage="4">最近30天</a>
+				</div>
+
+				<div class="time-data">
+					<div class="time-input">
+							<input type="text" id="dateTime" name="" placeholder="请选择时间">
+					</div>
+					<div class="laydate-box" id="laydateBox">
+					</div>
+				</div>
+		</div>
+
     </div>
 
     <!-- 内容部 -->
     <div class="main">
+		
+		<!-- 上部 -->
+		<div class="main-t">
 
-        <!-- 左内容部 -->
-        <div class="main-l">
-            <!-- 左侧上部 -->
-            <div class="main-l-t">
+			<div class="main-t-l">
+				<div class="main-list"  style="width:3.5rem;">
 
-                <!--左侧上部列表  -->
-                <div class="main-list main-l-list l"  >
                     <div class="h-1">
-                        <span>区域支付排行</span>
+                        <span>区域用卡量排行</span>
                         <img src="./images/side1.png">
                     </div>
-                    <div class="list-box" id="regionalPayment">
+                     <div class="list-box">
+
+							<ul style="height: 4.6rem;width: 106%;">
+	                            <li class="list-h">
+	                            <span>排名</span>
+	                            <span>区域</span>
+	                            <span>支付笔数</span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+	                            <li class="list-item">
+	                            <span><%=data[i].seq%></span>
+	                            <span><%=data[i].areaName%></span>
+	                            <span class="blue"><%=data[i].payNum%></span>
+	                            </li>
+                            </ul>
+
                     </div>
 
-                </div>
-                <!--左侧上部列表模版  -->
-                <script id="regionalPaymentTpl" type="text/html">
+               	</div>
+			</div>
 
-
-                            <ul style="height: 5.1rem;width: 106%;">
-
-                            <li class="list-h">
-                            <span>排名</span>
-                            <span>区域</span>
-                            <span>支付笔数</span>
-                            <span>支付金额</span>
-                            </li>
-                     <% for(var i=0; i<data.length ;i++){ %>
-                            <li class="list-item">
-                            <span><%=data[i].seq%></span>
-                            <span><%=data[i].areaName%></span>
-                            <span class="blue"><%=data[i].payNum%></span>
-                            <span class="blue"><%=data[i].payAmt%></span>
-                            </li>
-                     <% } %>
-                            </ul>
-                </script>
-
-
-                <div class="main-l-t-center r">
-
-                    <!--左侧上部统计  -->
-                    <div class="box-list" id="boxList">
+			<div class="main-t-c">
+				
+				   <div class="box-list"	>
 
                         <!-- 5个框  -->
-                        <!--<div class="box-item l">
-                            <div class="box-item-t">发卡量(本月)</div>
+                        <div class="box-item l">
+                            <div class="box-item-t">发卡量</div>
                             <div class="box-item-v blue l">1231231231</div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                            </div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">1231231</span>
-                                <span style="display: inline-block;width: 50%">123123</span>
-                            </div>
                         </div>
 
                         <div class="box-item l">
-                            <div class="box-item-t">预制卡量(本月)</div>
+                            <div class="box-item-t">预制卡量</div>
                             <div class="box-item-v blue l">1231231231</div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                            </div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">1231231</span>
-                                <span style="display: inline-block;width: 50%">123123</span>
-                            </div>
+                        </div>
+
+                        <div class="box-item l" >
+                            <div class="box-item-t" >用卡量</div>
+                            <div class="box-item-v blue l">1231231231</div>
+                        </div>
+
+                        <div class="box-item l" style="margin-left: 0;" >
+                            <div class="box-item-t">发卡上传量</div>
+                            <div class="box-item-v blue l">1231231231</div>
                         </div>
 
                         <div class="box-item l">
-                            <div class="box-item-t">用卡量(本月)</div>
+                            <div class="box-item-t">用卡上传量</div>
                             <div class="box-item-v blue l">1231231231</div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                            </div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">1231231</span>
-                                <span style="display: inline-block;width: 50%">123123</span>
-                            </div>
                         </div>
-
-                        <div class="box-item l">
-                            <div class="box-item-t">发卡上传量(本月)</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                            </div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">1231231</span>
-                                <span style="display: inline-block;width: 50%">123123</span>
-                            </div>
-                        </div>
-
-                        <div class="box-item l">
-                            <div class="box-item-t">用卡上传量(本月)</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                                <span style="display: inline-block;width: 50%">昨日</span>
-                            </div>
-                            <div>
-                                <span style="display: inline-block;width: 50%">1231231</span>
-                                <span style="display: inline-block;width: 50%">123123</span>
-                            </div>
-                        </div>-->
 
                     </div>
-
-                    <!--左侧上部统计模版  -->
-                    <script type="text/html" id="boxListTpl">
-
-                        <div class="box-list">
-
-
-
-                            <!-- 3个框 -->
-                            <div class="box-item2 l">
-                                <div class="box-item-t">支付金额
-                                <% if(data.statFlag == 1 ){ %>
-                                    (本月)
-                                <% } else { %>
-                                    (本年)
-                                <% } %>
-                                </div>
-                                <div class="box-item-v blue l"><%= data.tradeStat.payAmt%></div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%">年度</span>
-                                    <span style="display: inline-block;width: 30%">昨日</span>
-                                    <span style="display: inline-block;width: 30%">今日</span>
-                                </div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.totalPayNum%></span>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.yesterdayPayAmt%></span>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.todayPayAmt%></span>
-                                </div>
-                            </div>
-
-                            <div class="box-item2 l">
-                                <div class="box-item-t">支付笔数
-                                    <% if(data.statFlag == 1 ) { %>
-                                    (本月)
-                                    <% } else { %>
-                                    (本年)
-                                    <% } %>
-                                </div>
-                                <div class="box-item-v blue l"><%= data.tradeStat.payNum%></div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%">年度</span>
-                                    <span style="display: inline-block;width: 30%">昨日</span>
-                                    <span style="display: inline-block;width: 30%">今日</span>
-                                </div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.totalPayNum%></span>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.yesterdayPayNum%></span>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.todayPayNum%></span>
-                                </div>
-                            </div>
-
-                            <div class="box-item2 l">
-                                <div class="box-item-t">社康总数</div>
-                                <div class="box-item-v blue l"><%= data.tradeStat.totalInstNum%></div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%">本月新增社康数</span>
-                                </div>
-                                <div>
-                                    <span style="display: inline-block;width: 30%"><%= data.tradeStat.newAddInst%></span>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                </script>
 
 
 
@@ -637,114 +595,193 @@
 
                         <div class="map-centent">
 
-                            <div class="pie-chart l" id="pieChart">
-
-                            </div>
-                            <div class="map-chart r" id="mapChart">
+                            <div class="map-chart " id="mapChart">
 
                             </div>
 
                         </div>
 
                     </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- 左侧底部 -->
-            <div class="main-l-b">
-
-                <div class="columnar-chart l">
-
-                    <div class="h-1" style="margin-left:0.4rem ">
-                        <span>社康机构支付排行</span>
-                        <img src="./images/side2.png" style="width:90%">
-                    </div>
-                    <!-- 柱折图 -->
-                    <div class="columnar-chart-box"   id="columnarChart1"></div>
-
-                </div>
-
-                <div style="height: 80%;width:0.01rem;background:#2a4795;position:absolute;left:50%;top: 10%;"></div>
+					<!-- 地图end -->
 
 
 
-                <div class="columnar-chart r">
 
-                    <div class="h-1" style="margin-left:0.4rem">
-                        <span>社康支付医院排行</span>
-                        <img src="./images/side2.png" style="width:90%">
-                    </div>
-                    <!-- 柱折图 -->
-                    <div class="columnar-chart-box"  id="columnarChart2"></div>
+			</div>
 
-                </div>
+			<div class="main-t-r">
+				
 
-            </div>
-
-        </div>
-
-        <!-- 右侧内容部 -->
-        <div class="main-r">
-
-            <div class="main-r-t">
-
-                <div class="h-1">
-                    <span>社康渠道分布</span>
-                    <img style="width:94%" src="./images/side1.png">
-                </div>
-
-                <div style="width: 100%;height: 70%;" id="columnarChart3"></div>
-
-            </div>
-
-            <div class="main-r-b" >
-                <!--左侧上部列表  -->
-                <div class="main-list main-r-list"  >
+				  <!--上部右侧  -->
+                <div class="main-list r" style="background-color: red">
                     <div class="h-1">
                         <span>区域机构数量</span>
                         <img src="./images/side1.png">
                     </div>
-                    <div class="list-box" id="regionalInstitution">
+
+                    <div class="list-box">
 
                     </div>
 
                 </div>
 
-                <script type="text/html" id="regionalInstitutionTpl">
 
-                        <ul style="height: 5rem;width: 105%;">
+			</div>
 
-                            <li class="list-h">
-                                <span>区域</span>
-                                <span>社康总数</span>
-                                <span>本月新增社康数</span>
-                            </li>
-                            <% for(var i=0; i<data.length ;i++){ %>
-                            <li class="list-item">
-                                <span><%=data[i].areaName%></span>
-                                <span class="blue"><%=data[i].totalNum%></span>
-                                <span class="blue"><%=data[i].newAddNum%></span>
-                            </li>
-                            <% } %>
-                        </ul>
+		</div>	
 
-                </script>
-
-            </div>
-        </div>
+  	</div><!--main end-->
 
 
-    </div>
-</div>
 </body>
 <script type="text/javascript">
 
 
-    $(function () {
+//兼容IE Object.assign
+if (typeof Object.assign != 'function') {
+  Object.assign = function(target) {
+    'use strict';
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
 
+    target = Object(target);
+    for (var index = 1; index < arguments.length; index++) {
+      var source = arguments[index];
+      if (source != null) {
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+    }
+    return target;
+  };
+}
+
+// 返回相对日期 format: 'yyyy-MM-dd'
+	var endDate = function (d,opt) {
+		opt = opt || {};
+		this._millisecond = 1000 * 60 * 60 * 24;//一天的时间
+		this._basis = (typeof d) == 'string' ?  new Date(d.replace('-','/')) : d;
+		this.format = opt.format || '-' ;
+		this._full = opt.full === false ? false : ( opt.full || '0' ) ;//是否单数补0 默认0
+	}
+	endDate.prototype.y = function (d){
+		d = d || null;
+		if(d && (typeof d) != 'string'){
+			return  d.getFullYear();
+		}
+		return null;
+	}
+	endDate.prototype.m = function (d){
+		d = d || null;
+		if(d && (typeof d) != 'string' ){
+			return  (d.getMonth()+1);
+		}
+		return null;
+	}
+	endDate.prototype.d = function (d){
+		d = d || null;
+		if(d && (typeof d) != 'string'){
+			return  d.getDate();
+		}
+		return null;
+	}
+	endDate.prototype.formatDate = function (d,format){
+		format = format || this.format;
+		d = d || null;
+		if(d && (typeof d) != 'string' ){
+			if(this._full){
+				return  this.y(d)+format+( this.m(d) < 10 ? this._full+this.m(d) : this.m(d) ) +format+ ( this.d(d) < 10 ? this._full+this.d(d) : this.d(d) );
+			}else{
+				return  this.y(d)+format+this.m(d) +format+this.d(d);
+			}
+		}
+		return null;
+	}
+	endDate.prototype.days = function (type,format,d){
+		//获取指定天数的日期 正为后 负为前
+			d = d || this._basis;
+			this.format = format || this.format;
+			if(d && (typeof d) != 'string'){
+				var t = null;
+				if(type < 0){ //往前算得 加一天
+					t = new Date(d.getTime()+this._millisecond);
+					t.setDate(this.d(t)+type);
+					return this.formatDate(t);
+				}else{
+					//往前算得 减一天
+					t = new Date(d.getTime()-this._millisecond);
+					t.setDate(this.d(t)+type);
+					return this.formatDate(t);
+				}
+
+			}
+			return null;
+		}
+	endDate.prototype.thisMonth = function (format,d){
+		//获取指定日期 的本月起至时间  array
+			d = d || this._basis;
+			this.format = format || this.format;
+			if(d && (typeof d) != 'string'){
+				var starAndEnd = [];
+				//获取指定时间的月份,时间,年份,本月第一天
+				var currentMonth = d.getMonth(),currentDate = this.d(d),currentYear = this.y(d)
+				,firstDay = new Date(currentYear,currentMonth,1);//本月第一天 
+
+				//12月的时候年份需要加1,月份需要为0,也就是明年1月份
+				if(currentMonth == 11){
+					currentYear++;
+					currentMonth=0;
+				}else{
+					//否者月份加1,以便求的下一月的第一天 
+					currentMonth++;
+				}
+				var nextMonthFristDay = new Date(currentYear,currentMonth,1);
+				var lastDay = new Date(nextMonthFristDay.getTime()-this._millisecond);//下个月第一天 减去1天 求得上个月 最后一天
+
+				starAndEnd.push(this.formatDate(firstDay));
+				starAndEnd.push(this.formatDate(lastDay));
+				return starAndEnd;
+			}
+			return null;
+		}
+
+	endDate.prototype.thisYear = function (format,d){
+				//获取指定日期 的本年的起止日期  array
+					d = d || this._basis;
+					this.format = format || this.format;
+					if(d && (typeof d) != 'string'){
+						var starAndEnd = [],currentYear = this.y(d);
+
+						 //本年第一天 
+				        var currentYearFirstDate = new Date(currentYear, 0, 1);
+				        //本年最后一天 
+				        var currentYearLastDate = new Date(currentYear, 11, 31);
+				        //添加至数组
+						starAndEnd.push(this.formatDate(currentYearFirstDate));
+						starAndEnd.push(this.formatDate(currentYearLastDate));
+						return starAndEnd;
+					}
+					return null;
+				}
+//endDate end
+
+
+//获取时间字符串
+function getinputDate(d,formatDate){
+	if(d && (typeof d) == 'string'&&formatDate){
+		return d.replace(/\s/ig,'').split(formatDate);
+	}
+	return ;
+}
+
+
+// 页面代码
+    $(function () {
+    	//加载图
         var load =function (padding) {
             return '<img src="./images/load.gif" style="display: block;width: 0.5rem;margin:0 auto;padding:'+padding+'" alt="">';
         };
@@ -755,7 +792,7 @@
         var columnarChart3 = null;//社康渠道分布
         var columnarChart1=null;//社康机构支付排行
         var columnarChart2=null;//社康支付医院排行
-        var chartLoadConfig = {
+        var chartLoadConfig = {//echart 加载样式
             text: '',
             color: '#20dbfd',
             textColor: '#000',
@@ -795,16 +832,71 @@
                 color: '#01d0fe'
             }
         };
-//初始化页面 1：月；2：年
-        initPage(1);
+
 
 //切换时间段
-        $('#timebtn').on('change', function () {
-            console.log($(this).val());
-            initPage($(this).val());
-        });
-//初始化函数
-        function initPage(statFlag) {
+		var zuotian = new Date(new Date().getTime() - 24*60*60*1000);//昨天的时间
+		var zuotianStr = zuotian.getFullYear() +'-'+ (zuotian.getMonth()+1) +'-'+ zuotian.getDate() ;
+		var endDateObj = new  endDate(zuotian);
+		$('#dateTime').val(endDateObj.thisMonth()[0] + ' 至 ' + zuotianStr );//设置默认时间 为本月时间
+
+	    var datelay = laydate.render({
+		  elem: '#laydateBox'
+		  ,range: '至'
+		  ,format: 'yyyy-MM-dd'
+		  ,theme: '#0a2340'
+		  ,position: 'static'
+		  ,max: zuotianStr
+		  ,showBottom: false //按钮不可以自定义
+		  // ,ready: function(){
+		  //   datelay.hint('日期可选有效时间设定在 <br>'+ zuotianStr +'之前');
+		  // }
+		  ,change: function(value, date){ //监听日期被切换
+		   		$('#dateTime').val(value);
+		   		var inputDate = getinputDate(value,'至');
+		   		initPage(inputDate[0],inputDate[1]);
+		   		console.log(inputDate);
+		  }
+		}); 
+
+//初始化页面 默认本月
+		var endT = getinputDate($('#dateTime').val(),'至');
+        //initPage(endT[0],endT[1]);
+
+//1:本月 2:本年 3:最近7天 4:最近30天   
+
+$('.time-list-btns').on('click','a',function(){
+	var flage = $(this).attr('data-flage').toString();
+	$('.time-btn-act').removeClass('time-btn-act');
+	$(this).addClass('time-btn-act');
+	
+	switch(flage){
+		case '1' : console.log(flage);  
+				$('#dateTime').val(endDateObj.thisMonth()[0] + ' 至 ' +  zuotianStr );
+		break;
+
+		case '2' : console.log(flage);  
+				$('#dateTime').val(endDateObj.thisYear()[0] + ' 至 ' +  zuotianStr );
+		break;
+
+		case '3' : console.log(flage);
+				$('#dateTime').val( endDateObj.days(-7) + ' 至 ' +  zuotianStr );
+		break;
+
+		case '4' : console.log(flage);  
+				$('#dateTime').val( endDateObj.days(-30) + ' 至 ' +  zuotianStr );
+
+		break;
+	}
+	var inputDate = getinputDate($('#dateTime').val(),'至');
+	initPage(inputDate[0],inputDate[1]);
+	console.log(inputDate);
+
+});
+	    
+
+//初始化函数 API更新为传这个两个字段startTime和endTime
+        function initPage(startTime,endTime) {
 
 
             //初始化地图
@@ -861,7 +953,10 @@
                         columnarChart1.showLoading(chartLoadConfig);//社康机构支付排行
                         columnarChart2.showLoading(chartLoadConfig);//社康支付医院排行
                     },
-                    data: {statFlag: statFlag},
+                    data: {
+                    	startTime:startTime,
+                    	endTime:endTime
+                    },
                     success: function (ret) {
                         console.log(ret);
                         if (JSON.stringify(ret) == '{}') {
@@ -877,7 +972,7 @@
                         //当前区支付排行统计 列表
                         //加逗号 format_number_arr(数组,keys:需要格式化的字段)
                        $('#regionalPayment').html(template( $('#regionalPaymentTpl').html() ,{data:format_number_arr(areaPayStat,['payNum','payAmt'])}) );
-                       $('#boxList').html( template( $('#boxListTpl').html() ,{data:{statFlag:statFlag,tradeStat:format_number_arr(ret.tradeStat,['newAddInst','payAmt','payNum','todayPayAmt','todayPayNum','totalInstNum','totalPayAmt','totalPayNum','yesterdayPayAmt','yesterdayPayNum'])}}) );
+                       $('#boxList').html( template( $('#boxListTpl').html() ,{data:{tradeStat:format_number_arr(ret.tradeStat,['newAddInst','payAmt','payNum','todayPayAmt','todayPayNum','totalInstNum','totalPayAmt','totalPayNum','yesterdayPayAmt','yesterdayPayNum'])}}) );
 
                        $('#regionalInstitution').html( template( $('#regionalInstitutionTpl').html() , {data:format_number_arr(instOpenStat,['totalNum','newAddNum'])} ));
 
@@ -1303,6 +1398,8 @@
                 }
             }
         }
+
+        //时间段
 
 
 // script end
