@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/index_ehc.css">
+	<script type="text/javascript">
+	        //最优先 rem布局代码
+	        (function (d, w) {
+	            var docEle = document.documentElement,
+	                    resizeE = 'orientationchange' in window ? 'orientationchange' : 'resize',
+	                    wResize = function () {
+	                        var  clientWidth = docEle.clientWidth;
+	                        if (!clientWidth) return;
+	                        //px转换rem:px/100    设计图1920   基数:100
+	                        docEle.style.fontSize = 100 * (clientWidth / 1920) + 'px';
+	                    }
+	            if (!d.addEventListener) return;
+	            w.addEventListener(resizeE , wResize , false);
+	            //在dom加载完后执行一遍
+	            d.addEventListener('DOMContentLoaded' , wResize ,false);
+
+	        })(document, window)
+
+	</script>
+	<script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="./js/echarts.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+	<script type="text/javascript" >
+   //地图对象
+        echarts.extendsMap = function(id, opt){
+            // 实例
+            var chart = this.init(document.getElementById(id));
+
+            // 深圳地理坐标
+            var shenzhen = "./js/shenzhenshi.json";
+            $.ajaxSettings.async=false;//设置getjson同步，使用后重新恢复异步
+            $.getJSON(shenzhen, function(geoJson) {
+                echarts.registerMap('深圳市',geoJson);
+            });
+            $.ajaxSettings.async=true;
+
+            var curGeoJson = {};//下钻的地理json
+
+            //下钻的json数据
+            var cityMap = {
+                "深圳市": shenzhen
+            };
+            //点的位置
+            var geoCoordMap = {
+                '深圳市': [ 114.027099609375,22.717923537632178],
+                '龙华区': [114.027099609375,22.717923537632178],
+                '光明新区':[113.93852233886719,22.77301594961187],
+                '大鹏新区':[114.50431823730469,22.607038308040828],
+                '坪山区':[114.35050964355469,22.67738161936916],
+                '龙岗区':[114.25437927246094,22.743889395219064],
+                '盐田区':[114.27635192871094,22.574072303523796],
+                '罗湖区':[114.14794921875,22.553781610660607],
+                '福田区':[114.04769897460938,22.52016858599439],
+                '南山区':[113.96186828613281,22.585484505801283],
+                '宝安区':[113.82865905761719,22.642531328085155]
+            };
+            //点的颜色
+            var cityConfig = opt.cityConfig ||  {
+                color : 'rgba(241, 109, 115, .8)',
+                color : 'rgba(255, 235, 59, .7)',
+                color : 'rgba(147, 235, 248, 1)'
+            };
+
+            //默认配置
+            var defaultOpt = {
+                mapName: 'china',     // 地图展示
+                goDown: false,        // 是否下钻
+                bgColor: '#404a59',   // 画布背景色
+                activeArea: [],       // 区域高亮,同echarts配置项
+                data: [],
+                // 下钻回调(点击的地图名、实例对象option、实例对象)
+                callback: function(name, option, instance){}
+            };
+            if(opt) opt = this.util.extend(defaultOpt, opt);
+
+            // 层级索引  标题
+            var name = [opt.mapName];
+            var idx = 0;
+            var pos = {
+                leftPlus: 50,//2级标题偏移
+                leftCur: 8,//2级标题偏移
+                left: 0,//1级标题偏移
+                top: 10//1级标题偏移
+            };
+
+            //标题的箭头
+            var line = [[0, 0], [8, 11], [0, 22]];
+            // style 通用的样式
+            var style = {
+                font: '18px "Microsoft YaHei", sans-serif',
+                textColor: '#eee',
+                lineColor: 'rgba(147, 235, 248, .8)'
+            };
+
+            var handleEvents = {
+                /**
+                 * i 实例对象
+                 * o option
+                 * n 地图名
+                 **/
+                resetOption: function(i, o, n){
+                    var breadcrumb = this.createBreadcrumb(n);//设置标题组件
+
+                    var j = name.indexOf(n);
+                    var l = o.graphic.length;
+                    if(j < 0){
+                        o.graphic.push(breadcrumb);
+                        o.graphic[0].children[0].shape.x2 = 145;
+                        o.graphic[0].children[1].shape.x2 = 145;
+                        if(o.graphic.length > 2){
+                            for(var x = 0; x < opt.data.length; x++){
+                                if(n === opt.data[x].name + '市'){
+                                    o.series[0].data = handleEvents.initSeriesData([opt.data[x]]);
+                                    break;
+                                }else o.series[0].data = [];
+                            }
+                        };
+                        name.push(n);
+                        idx++;
+                    }else{
+                        o.graphic.splice(j + 2, l);
+                        if(o.graphic.length <= 2){
+                            o.graphic[0].children[0].shape.x2 = 60;
+                            o.graphic[0].children[1].shape.x2 = 60;
+                            o.series[0].data = handleEvents.initSeriesData(opt.data);
+                        };
+                        name.splice(j + 1, l);
+                        idx = j;
+                        pos.leftCur -= pos.leftPlus * (l - j - 1);
+                    };
+
+                    o.geo.map = n;
+                    o.geo.zoom = 0.4;
+                    i.clear();
+                    i.setOption(o);
+                    this.zoomAnimation();
+                    opt.callback(n, o, i);
+                },
+
+                /**
+                 * name 地图名  标题组件
+                 **/
+                createBreadcrumb: function(name){
+                    var cityToPinyin = {
+                        "深圳市": "shenzhen",//地图中文 : 地图拼音设置
+                    };
+                    var breadcrumb = {
+                        type: 'group',
+                        id: name,
+                        left: pos.leftCur + pos.leftPlus,
+                        top: pos.top + 3,
+                        children: [{
+                            type: 'polyline',
+                            left: -90,
+                            top: -5,
+                            shape: {
+                                points: line
+                            },
+                            style: {
+                                stroke: '#fff',
+                                key: name
+                                // lineWidth: 2,
+                            },
+                            onclick: function(){
+                                var name = this.style.key;
+                                handleEvents.resetOption(chart, option, name);
+                            }
+                        }, {
+                            type: 'text',
+                            left: -68,
+                            top: 'middle',
+                            style: {
+                                text: name,
+                                textAlign: 'center',
+                                fill: style.textColor,
+                                font: style.font
+                            },
+                            onclick: function(){
+                                var name = this.style.text;
+                                handleEvents.resetOption(chart, option, name);
+                            }
+                        }, {
+                            type: 'text',
+                            left: -68,
+                            top: 10,
+                            style: {
+
+                                name: name,
+                                text: cityToPinyin[name] ? cityToPinyin[name].toUpperCase() : '',
+                                textAlign: 'center',
+                                fill: style.textColor,
+                                font: '12px "Microsoft YaHei", sans-serif',
+                            },
+                            onclick: function(){
+                                // console.log(this.style);
+                                var name = this.style.name;
+                                handleEvents.resetOption(chart, option, name);
+                            }
+                        }]
+                    }
+
+                    pos.leftCur += pos.leftPlus;
+
+                    return breadcrumb;
+                },
+
+                // 设置effectscatter
+                initSeriesData: function(data){
+                    var temp = [];
+                    for(var i = 0;i < data.length;i++){
+                        var geoCoord = geoCoordMap[data[i].name];
+                        if(geoCoord){
+                            var t=[];
+                            for ( objkey in data[i]){
+                                t.push(data[i][objkey]);
+                            }
+                            temp.push({
+                                name: data[i].name,
+                                value: geoCoord.concat(t)   //数据点的值 可以增加其他数据
+                            });
+                        }
+                    }
+                    return temp;
+                },
+
+                zoomAnimation: function(){
+                    var count = null;
+                    var zoom = function(per){
+                        if(!count) count = per;
+                        count = count + per;
+                        // console.log(per,count);
+                        chart.setOption({
+                            geo: {
+                                zoom: count
+                            }
+                        });
+                        if(count < 1) window.requestAnimationFrame(function(){
+                            zoom(0.2);
+                        });
+                    };
+                    window.requestAnimationFrame(function(){
+                        zoom(0.2);
+                    });
+                }
+            };
+
+            //初始化标题的配置
+            var option = {
+                backgroundColor: opt.bgColor,
+                graphic: [{  //左上角按钮
+                    type: 'group',
+                }],
+                geo: {//地图块
+                    map: opt.mapName,
+                    //roam: true,//拖动,鼠标滚轴
+                    zoom: 1.3,
+                    label: {
+                        normal: {
+                            show: true,//地图块中的名字
+                            textStyle: {
+                                color: '#fff',
+                                fontSize : "10"
+                            }
+                        },
+                        emphasis: {
+                            textStyle: {//地图块中的名字 的 hover
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    itemStyle: {//每个地图块
+                        normal: {
+                            //borderColor: 'rgba(147, 235, 248, 1)',//每个地图块的边框颜色
+                            borderColor: '#5491be',
+                            borderWidth: 1,
+                            areaColor: {//填充的颜色
+                                type: 'radial',
+                                x: 0.5,
+                                y: 0.5,
+                                r: 0.8,
+                                colorStops: [{
+                                    offset: 0,
+                                    //color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                                    //color: '#174e87'
+                                    color:'rgba(23,78,135,0.6)'
+                                }, {
+                                    offset: 1,
+                                    //color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                                    //color: '#356798'
+                                    color:'rgba(53,103,152,0.6)'
+                                }],
+                                globalCoord: false // 缺省为 false
+                            },
+                            shadowColor: 'rgba(128, 217, 248, 1)',
+                            // shadowColor: 'rgba(255, 255, 255, 1)',
+                            // shadowOffsetX: -2,
+                            // shadowOffsetY: 2,
+                            // shadowOffsetX: -1,
+                            // shadowOffsetY: 1,
+                            // shadowBlur: 10
+                        },
+                        emphasis: {//每个地图块的hover
+                            areaColor: '#389BB7',
+                            borderWidth: 0
+                        }
+                    },
+                    regions: opt.activeArea.map(function(item){
+                        if(typeof item !== 'string'){
+                            return {
+                                name: item.name,
+                                itemStyle: {
+                                    normal: {
+                                        areaColor: item.areaColor || '#389BB7'
+                                    }
+                                },
+                                label: {
+                                    normal: {
+                                        show: item.showLabel,
+                                        textStyle: {
+                                            color: '#fff'
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            return {
+                                name: item,
+                                itemStyle: {
+                                    normal: {
+                                        borderColor: '#91e6ff',
+                                        areaColor: '#389BB7'
+                                    }
+                                }
+                            }
+                        }
+                    })
+                },
+                tooltip : {
+                    formatter: function (params, ticket, callback) {
+                        //  temp[2] : "宝安区" //name   temp[3]: 10 //payNum   temp[4]: "add20" //payAmt
+                        return params.name+"<br>用卡量:"+params.value[3];
+                    }
+                },
+                series: [{//数据点的样式
+                    name: 'point',
+                    type: 'effectScatter',
+                    coordinateSystem: 'geo',
+                    // symbol: 'diamond',
+                    showEffectOn: 'render',
+                    rippleEffect: {
+                        period: 6,
+                        scale: 3,
+                        brushType: 'fill'
+                    },
+                    hoverAnimation: true,
+                    itemStyle: {
+                        normal: {
+                            color: function(params){
+                                return cityConfig[params.name].color;
+                            },
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    data: handleEvents.initSeriesData(opt.data)
+                }]
+            };
+
+            if(opt.data) {
+                chart.setOption(option);
+            }
+            // 添加事件
+            chart.on('click', function(params){
+                var _self = this;
+                if(opt.goDown && params.name !== name[idx]){
+                    if(cityMap[params.name]){
+                        var url = cityMap[params.name];
+                        $.get(url, function(response){
+                            // console.log(response);
+                            curGeoJson = response;
+                            echarts.registerMap(params.name, response);
+                            handleEvents.resetOption(_self, option, params.name);
+                        });
+                    }
+                }
+            });
+
+            chart.setMap = function(mapName){
+                var _self = this;
+                if(mapName.indexOf('市') < 0) mapName = mapName + '市';
+                var citySource = cityMap[mapName];
+                if(citySource){
+                    var url = './map/' + citySource + '.json';
+                    $.get(url, function(response){
+                        // console.log(response);
+                        curGeoJson = response;
+                        echarts.registerMap(mapName, response);
+                        handleEvents.resetOption(_self, option, mapName);
+                    });
+                }
+                handleEvents.resetOption(this, option, mapName);
+            };
+
+            chart.setData  = function (data) {
+                //initSeriesData  调用内部方法 整理数据
+                var _self = this;
+                if(data.length == 0){
+                    return ;
+                }
+                _self.setOption({
+                    series:[{
+                        name: 'point',
+                        data:handleEvents.initSeriesData(data)
+                    }]
+                });
+            };
+
+            return chart;
+        };
+        //地图 end
+	</script>
+
+</head>
+<body>
+<div class="bigbg">
+
+    <div class="main loadBg" id="main">
+
+        <div class="main-h">
+            <p class="main-h-title" >电子健康卡数据一览平台</p>
+            <p class="main-h-time"><img src="./images/time_icon.png"><span>{{nowTime}}</span></p>
+        </div>
+
+        <!-- 左侧 -->
+        <div class="main-l l">
+
+            <div class="main-l-box l">
+                <!--发卡及用卡量趋势（最近6月）  -->
+                <div class="mouth-box">
+                    <p class="box-h">发卡及用卡量趋势（最近6月）</p>
+                    <div id="monthsCardStatChart" class="trend"></div>
+                </div>
+                <!-- 发卡及用卡量趋势（最近7日） -->
+                <div class="day-box">
+                    <p class="box-h">发卡及用卡量趋势（最近7日）</p>
+                    <div id="daysCardStatChart"  class="trend"></div>
+                </div>
+
+                <!-- 区域用卡量排行（今日） -->
+                <div class="quantity-usage">
+                    <p class="box-h">区域用卡量排行（今日）</p>
+                    <ul class="quantity-list">
+                        <li class="quantity-h">
+                            <span>排名</span>
+                            <span>区域</span>
+                            <span class="quantity-v">今日用卡量</span>
+                        </li>
+
+                        <li v-for=" (item,index)  in format_areaUseCardStat" :key="index">
+                            <span><small :style="item.color ?  'background:'+item.color : '' ">{{item.seq}}</small></span>
+                            <span>{{item.areaName}}</span>
+                            <span class="quantity-v">{{item.useCardNum}}</span>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div><!-- main-l-box end -->
+
+            <div class="main-r-box r">
+
+                          <div class="box-item">
+                                <div class="item-t">
+                                    <div class="l">
+                                        <p class="item-h">总发卡量</p>
+                                        <p class="item-v">{{format_totalCardNum}}</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">本月发卡量</p>
+                                        <p class="item-v">{{format_monthCardNum}}</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">今日发卡量</p>
+                                        <p class="item-v">{{format_todayCardNum}}</p>
+                                    </div>
+
+                                </div>
+                                <div class="item-b">
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_totalUploadCardNum}}</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_monthUploadCardNum}}</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_todayUploadCardNum}}</span>）
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-item">
+                                <div class="item-t">
+                                    <div class="l">
+                                        <p class="item-h">总用卡量</p>
+                                        <p class="item-v">{{format_totalUseCardNum}}</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">本月用卡量</p>
+                                        <p class="item-v">{{format_monthUseCardNum}}</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">今日用卡量</p>
+                                        <p class="item-v">{{format_todayUseCardNum}}</p>
+                                    </div>
+
+                                </div>
+                                <div class="item-b">
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_totalUploadUseCardNum}}</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_monthUploadUseCardNum}}</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>{{format_todayUploadUseCardNum}}</span>）
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- 深圳地图 -->
+                <div class="map-chart" id="mapChart">
+                </div>
+
+            </div><!--main-r-box end-->
+
+
+
+        </div>
+
+        <!-- 右侧 -->
+        <div class="main-r r">
+
+            <div class="main-r-container">
+                <div class="chart-box">
+                    <p class="box-h">医院用卡量排行（今日）</p>
+                    <div id="orgUseCardStatChart" class="trend2"></div>
+                </div>
+
+                <div class="chart-box">
+                    <p class="box-h">医院发卡量排行（今日）</p>
+                    <div id="orgCardStatChart" class="trend2"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    //兼容IE Object.assign
+    if (typeof Object.assign != 'function') {
+        Object.assign = function(target) {
+            'use strict';
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+
+            target = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var source = arguments[index];
+                if (source != null) {
+                    for (var key in source) {
+                        if (Object.prototype.hasOwnProperty.call(source, key)) {
+                            target[key] = source[key];
+                        }
+                    }
+                }
+            }
+            return target;
+        };
+    }
+
+    // var main = null;//vue 实例对象
+
+    // 页面代码
+    $(function () {
+        var lineDataMax = 200000;//柱状图阴影最大值预设
+        var payMax = 1000000;//柱状图阴影最大值预设
+        var main = null;//vue 实例对象
+
+        //城市的配置
+        var cityConfig = {
+            '龙华区': {
+                color: '#7947a8'
+            },
+            '光明新区': {
+                color: '#159a8c'
+            },
+            '大鹏新区': {
+                color: '#124292'
+            },
+            '坪山区': {
+                color: '#474dad'
+            },
+            '龙岗区': {
+                color: '#a14b0b'
+            },
+            '盐田区': {
+                color: '#7d9a1d'
+            },
+            '罗湖区': {
+                color: '#3a7cd5'
+            },
+            '福田区': {
+                color: '#a16c0b'
+            },
+            '南山区': {
+                color: '#1ca8eb'
+            },
+            '宝安区': {
+                color: '#01d0fe'
+            }
+        };
+
+        var vueObj={
+            el: '#main',
+            data : {
+                apiUrl:'./js/xkyehc.json',
+                type:'GET',
+                now:new Date(),
+                _timer:'',
+                loopTime:300000,//5分钟刷一次
+                //loopTime:1000,
+                mapChart:'',//地图对象
+                daysCardStatChart:'',//近7天用卡/发卡统计图表
+                monthsCardStatChart:'',//近6个月用卡/发卡统计图表
+                orgUseCardStatChart:'',//医院用卡量排行图表
+                orgCardStatChart:'',//医院发卡量排行图表
+                totalCardNum:'0',//总发卡量
+                totalUploadCardNum:'0',//总发卡上传量
+                monthCardNum:'0',//本月发卡量
+                monthUploadCardNum:'0',//本月卡上传量
+                todayCardNum:'0',//	今日发卡量
+                todayUploadCardNum:'0',//	今日卡上传量
+                totalUseCardNum:'0',//      	总用卡量
+                totalUploadUseCardNum:'0',//	总用卡上传量
+                monthUseCardNum:'0',//  	本月用卡量
+                monthUploadUseCardNum :'0',//	本月用卡上传量
+                todayUseCardNum:'0',//   	今日用卡量
+                todayUploadUseCardNum:'0',//	今日用卡上传量
+                areaUseCardStat:[],//区域用卡量排行
+                orgUseCardStat:[],//医院用卡量排行
+                orgCardStat:[],//医院发卡量排行
+                monthsCardStat:[],//近6个月
+                daysCardStat:[]//近7天
+            },
+            computed:{
+                nowTime: function () {
+                    var s = this.now.getFullYear() + '年' + (this.now.getMonth() + 1)+ '月' + this.now.getDate() + '日\n'
+                            + this.now.getHours() + ':' + this.now.getMinutes() + ':' + this.now.getSeconds();
+                    return s;
+                },
+                format_totalCardNum:function(){
+                    return format_number(this.totalCardNum);
+                },
+                format_totalUploadCardNum:function(){
+                    return format_number(this.totalUploadCardNum);
+                },
+                format_monthCardNum:function(){
+                    return format_number(this.monthCardNum);
+                },
+                format_monthUploadCardNum:function(){
+                    return format_number(this.monthUploadCardNum);
+                },
+                format_todayCardNum:function(){
+                    return format_number(this.todayCardNum);
+                },
+                format_todayUploadCardNum:function(){
+                    return format_number(this.todayUploadCardNum);
+                },
+                format_totalUseCardNum:function(){
+                    return format_number(this.totalUseCardNum);
+                },
+                format_totalUploadUseCardNum:function(){
+                    return format_number(this.totalUploadUseCardNum);
+                },
+                format_monthUseCardNum:function(){
+                    return format_number(this.monthUseCardNum);
+                },
+                format_monthUploadUseCardNum :function(){
+                    return format_number(this.monthUploadUseCardNum);
+                },
+                format_todayUseCardNum:function(){
+                    return format_number(this.todayUseCardNum);
+                },
+                format_todayUploadUseCardNum:function(){
+                    return format_number(this.todayUploadUseCardNum);
+                },
+                format_areaUseCardStat:function () {
+                    var vm = this,arr=[];
+                    for (var i=0 ;i<vm.areaUseCardStat.length;i++) {//给列表加颜色
+                        if(!(cityConfig[vm.areaUseCardStat[i].areaName])){continue;}
+                        var o={};
+                        o.seq = vm.areaUseCardStat[i].seq;
+                        o.color = cityConfig[vm.areaUseCardStat[i].areaName].color;
+                        o.useCardNum = format_number(vm.areaUseCardStat[i].useCardNum);
+                        o.areaName = vm.areaUseCardStat[i].areaName;
+                        arr.push(o);
+                    }
+                    return arr;
+                }
+            },
+            watch:{//在watch更新echart data
+                areaUseCardStat:function () {
+                    var vm = this;
+                    console.log('change map');
+                    vm.mapChart.setData(tranData(vm.areaUseCardStat, ['name', 'useCardNum'], ['areaName', 'useCardNum',]));//更新地图数据
+                },
+                orgUseCardStat:function () {//医院用卡量排行（今日）
+                    var vm = this;
+                    vm.orgUseCardStatChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.orgUseCardStat,'orgName').reverse(),
+                        grid:{
+                                left: '0%',
+                                right: '0%',
+                                top: '6%',
+                                width:'100%',
+                                height: '100%',
+                                containLabel: true
+                            },
+                        seriesShadowData:fullArr(vm.orgUseCardStat.length,lineDataMax),
+                        seriesName:'今日用卡量',
+                        seriesData:objToArr(vm.orgUseCardStat,'useCardNum').reverse()
+                    }));
+                },
+                orgCardStat:function () {//医院发卡量排行（今日）
+                    var vm = this;
+                    vm.orgCardStatChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.orgCardStat,'orgName').reverse(),
+                        grid:{
+                            left: '0%',
+                            right: '0%',
+                            top: '6%',
+                            width:'100%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesShadowData:fullArr(vm.orgCardStat.length,lineDataMax),
+                        seriesName:'今日发卡量',
+                        seriesData:objToArr(vm.orgCardStat,'cardNum').reverse()
+                    }));
+                },
+                monthsCardStat:function () {
+                    var vm = this;
+                    vm.monthsCardStatChart.setOption(histogram({
+                        xAxis:objToArr(vm.monthsCardStat,'date'),
+                        seriesArr:[
+                            {
+                                name:'用卡量',
+                                data:objToArr(vm.monthsCardStat,'useCardNum'),
+                            },
+                            {
+                                name:'发卡量',
+                                data:objToArr(vm.monthsCardStat,'cardNum'),
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false,
+                                    // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+                },
+                daysCardStat:function () {
+                    var vm = this;
+                    vm.daysCardStatChart.setOption(histogram({
+                        xAxis:objToArr(vm.daysCardStat,'date'),
+                        seriesArr:[
+                            {
+                                name:'用卡量',
+                                data:objToArr(vm.daysCardStat,'useCardNum'),
+                            },
+                            {
+                                name:'发卡量',
+                                data:objToArr(vm.daysCardStat,'cardNum'),
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false,
+                                    // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+                },
+
+            },
+            created : function (){
+                var vm = this;
+                console.log('初始化页面');
+                vm.init();//初始化页面
+                vm.loopData(vm.loopTime,function (d) {
+                    vm.now = new Date();//更新成功是更新时间
+                    console.log('loopDataCB');
+                })
+            },
+            methods : {
+                init:function(){
+                    var vm = this;
+                    vm.POST(function(ret){
+                        $(vm.$el).removeClass('loadBg');
+                        vm.setData(ret);
+                        vm.initMap();
+                        vm.initOrgUseCardStatChart();
+                        vm.initOrgCardStatChart();
+                        vm.initDaysCardStatChart(),//近7天用卡/发卡统计
+                        vm.initMonthsCardStatChart(),//近6个月用卡/发卡统计
+                        vm.wResize();
+                        console.log(vm.$data,'完成页面初始化');
+                    });
+                },
+                loopData:function (time,fn) {
+                    var vm = this;
+                    vm._timer=setTimeout(function () {
+                        console.log('请求数据');
+                        vm.POST(function(ret){
+                            vm.setData(ret);
+                            fn(ret);
+                            console.log('请求成功,返回数据,启动定时器:',time);
+                            vm.loopData(time,fn);
+                        });
+
+                    },time);
+                },
+                POST:function (success) {
+                    var vm = this;
+
+                    //请求页面数据
+                    $.ajax({
+                        url: vm.apiUrl,
+                        type: vm.type,
+                        dataType: 'json',
+                        success: function (ret) {
+                            if (JSON.stringify(ret) == '{}') {
+                                console.log('没数据');
+                                return
+                            }
+                            success(ret);
+                        }
+                    });
+
+                },
+                setData(d){
+                    var vm = this;
+                    for (var k in d ) {
+                        if (d.hasOwnProperty(k)) {
+                            if(d[k] instanceof Object && !(d[k] instanceof Array) ){
+                                vm.setData(d[k]);
+                            } else {
+                                vm[k] = d[k];
+                            }
+                        }
+                    }
+                },
+                wResize:function(){
+
+                    var vm = this;
+                    //适应屏幕
+                    $(window).on('resize', winResize);
+                    function winResize() {
+                        if(vm.mapChart){
+                            vm.mapChart.resize();
+                        }
+                        if(vm.orgUseCardStatChart) {
+                            vm.orgUseCardStatChart.resize();
+                        }
+                        if(vm.orgCardStatChart) {
+                            vm.orgCardStatChart.resize();
+                        }
+                        if(vm.daysCardStatChart) {
+                            vm.daysCardStatChart.resize();
+                        }
+                        if(vm.monthsCardStatChart) {
+                            vm.monthsCardStatChart.resize();
+                        }
+
+                    }
+
+                },
+                initMap:function(){
+                    //初始化地图
+                    var vm = this;
+                    vm.mapChart = echarts.extendsMap('mapChart', {
+                        //bgColor: '#154e90', // 画布背景色
+                        bgColor: 'rgba(0,0,0,0)',
+                        mapName: '深圳市',    // 地图名
+                        goDown: false,       // 是否下钻
+                        // 下钻回调
+                        callback: function (name, option, instance) {
+                            console.log(name, option, instance);
+                        },
+                        cityConfig: cityConfig,
+                        // 数据展示
+                        //data: [
+                        //]
+                    });
+
+                    //加载地图
+                    vm.mapChart.setData(tranData(vm.areaUseCardStat, ['name',  'useCardNum'], ['areaName', 'useCardNum']));//更新地图数据
+                },
+                initOrgUseCardStatChart : function () {
+                    //医院用卡量排行（今日）图表
+                    var vm = this;
+                    vm.orgUseCardStatChart = echarts.init(document.getElementById('orgUseCardStatChart'));
+                    vm.orgUseCardStatChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.orgUseCardStat,'orgName').reverse(),
+                        grid:{
+                            left: '0%',
+                            right: '0%',
+                            top: '6%',
+                            width:'100%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesShadowData:fullArr(vm.orgUseCardStat.length,lineDataMax),
+                        seriesName:'今日用卡量',
+                        seriesData:objToArr(vm.orgUseCardStat,'useCardNum').reverse()
+                    }));
+                } ,
+                initOrgCardStatChart:function () {
+                    // 医院发卡量排行（今日）
+                    var vm = this;
+                    vm.orgCardStatChart = echarts.init(document.getElementById('orgCardStatChart'));
+                    vm.orgCardStatChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.orgCardStat,'orgName').reverse(),
+                        grid:{
+                            left: '0%',
+                            right: '0%',
+                            top: '6%',
+                            width:'100%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesShadowData:fullArr(vm.orgCardStat.length,lineDataMax),
+                        seriesName:'今日发卡量',
+                        seriesData:objToArr(vm.orgCardStat,'cardNum').reverse()
+                    }));
+
+                },
+                initDaysCardStatChart:function(){//近7天用卡/发卡统计
+                    var vm = this;
+                    vm.daysCardStatChart = echarts.init(document.getElementById('daysCardStatChart'));
+                    vm.daysCardStatChart.setOption(histogram({
+                        xAxis:objToArr(vm.daysCardStat,'date'),
+                        seriesArr:[
+                            {
+                                name:'用卡量',
+                                data:objToArr(vm.daysCardStat,'useCardNum'),
+                            },
+                            {
+                                name:'发卡量',
+                                data:objToArr(vm.daysCardStat,'cardNum'),
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false,
+                                    // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+
+
+
+                },
+                initMonthsCardStatChart:function(){//近6个月用卡/发卡统计
+                    var vm = this;
+                    vm.monthsCardStatChart = echarts.init(document.getElementById('monthsCardStatChart'));
+                    vm.monthsCardStatChart.setOption(histogram({
+                        xAxis:objToArr(vm.monthsCardStat,'date'),
+                        seriesArr:[
+                            {
+                                name:'用卡量',
+                                data:objToArr(vm.monthsCardStat,'useCardNum'),
+                            },
+                            {
+                                name:'发卡量',
+                                data:objToArr(vm.monthsCardStat,'cardNum'),
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false,
+                                    // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+
+
+                },
+
+            }
+        };
+
+        //两根柱状图
+        function histogram(opt) {
+            if(!opt.xAxis){return ;}
+            
+            function formatterFN(d) {
+                var arr = (d.value).toString().split('');
+                var label = '';
+                for (var i = 0; i < arr.length; i++) {
+                    label += arr[i] + '\n';
+                }
+                return label;
+            }
+
+            var histogramOption = {
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor:'rgba(50,50,50,0.9)' ,
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid:{
+                    left: '0%',
+                    right: '0%',
+                    top: '20%',
+                    width:'100%',
+                    height: '76%',
+                    containLabel: true
+                },
+                legend: {
+                    left: 0,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 8
+                    },
+                    itemWidth: 10,
+                    itemHeight: 10
+                },
+                xAxis: {
+                    type: 'category',
+                    data: opt.xAxis,//传入x轴
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 8,
+                            color: "#fff" //轴文字颜色
+                        }
+                    },
+                    nameTextStyle: {
+                        color: "#fff"
+                    },
+                    axisLine: {
+                        //轴线
+                    },
+                    axisTick: {
+                        //刻度
+                        show: false
+                    }
+
+                },
+                yAxis: {
+                    type: 'value',
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    },
+                    splitLine: {
+                        //网格线
+                        show: false
+                    },
+                    nameTextStyle: {
+                        color: "#fff"
+                    },
+                },
+                series: []
+            };
+
+            if(opt.seriesArr) {
+                for (var i=0;i<opt.seriesArr.length;i++) {
+                    var item = opt.seriesArr[i];
+                    var o = {
+                        name: item.name,//传入
+                        type: 'bar',
+                        label: {
+                            show: true,
+                            position: 'top',
+                            align:'right',
+                            rotate: -60,
+                            color: "#fff",
+                            formatter: '{c}' || formatterFN,
+                            fontSize: 8
+                        },
+                        itemStyle: {
+                            color: item.color || {
+                                colorStops: [{
+                                    offset: 0,
+                                    color: '#3dc0e9' // 0% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: '#45e3cf' // 100% 处的颜色
+                                }],
+                                globalCoord: false,
+                                // 缺省为 false
+                            }
+                        },
+                        data: item.data//传入
+                    }
+                    histogramOption.series.push(o);
+                }
+
+            }
+
+            return histogramOption;
+        }
+
+
+
+/*demo
+        main = new Vue({
+            el:'#main',
+            data: {
+                number: 0,
+                tweenedNumber: 0
+            },
+            computed: {
+                animatedNumber: function() {
+                    return this.tweenedNumber.toFixed(0);
+                }
+            },
+            watch: {
+                number: function(newValue) {
+                    //TweenLite.to(this.$data, 0.8, { tweenedNumber: newValue });
+                    this.$data.tweenedNumber=newValue;
+                }
+            }
+
+        });
+
+        setInterval(function () {
+            main.$data.number   = main.$data.number+100;
+        },1000)*/
+
+        main = new Vue(vueObj);
+
+
+//横向图 opt.yAxisData Y轴 名称;  opt.seriesShadowData阴影data(只有一类型数据可以用);  opt.seriesName 柱状图的名称; opt.seriesFormatter 柱状图的label; opt.seriesData 柱状图的data
+        function horizontalOption(opt){
+            var horizontal = {
+                tooltip: {
+                    trigger : 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter:function(d){
+                        var s = '';
+                        if(d[0].name.length>10){
+                            s+= d[0].name.substr(0,10)+'<br/>'+d[0].name.substr(10,d[0].name.length)+'<br/>';
+                        }else{
+                            s+= d[0].name+'<br/>';
+                        }
+                        for (var i=0 ; i<d.length ; i++) {
+                            var data = d[i];
+                            s+=data.seriesName+':'+data.value+'<br/>';
+                        }
+                        return s;
+                    }
+                },
+                legend:{
+                    left:0,
+                    textStyle:{
+                        color:'#fff',
+                        fontSize:8
+                    },
+                    itemWidth : 10,
+                    itemHeight : 10
+                },
+                grid: opt.grid || {
+                    left: '0%',
+                    right: '0%',
+                    top: '0%',
+                    width:'100%',
+                    height: '100%',
+                    containLabel: true
+                },
+                xAxis: {
+                    show:false,
+                },
+                yAxis: {
+                    type: 'category',
+                    data:opt.yAxisData,
+                    axisLabel: {
+                        color: '#fff',
+                        align:opt.yAxisAlign || '',
+                        formatter: function(params) {
+                            if(params.length>10){
+                                return params.substr(0,10)+'...';
+                            }
+                            return params;
+                        },
+                    },
+                    axisTick: {
+                        show: false, //隐藏Y轴刻度
+                    },
+                    axisLine: {
+                        show: false, //隐藏Y轴线段
+                    }
+                },
+                series: []
+            };
+
+            if(opt.legend){
+                horizontal.legend.data = opt.legend;
+            }
+
+            if(!opt.seriesArr) { // 不存在seriesArr 单数据带阴影的图标
+                //阴影
+                if (opt.seriesShadowData) {
+                    var seriesShadow = {
+                        show: true,
+                        type: 'bar',
+                        barGap: '-100%',
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        tooltip: {
+                            show: false
+                        },
+                        z: 1,
+                        data: opt.seriesShadowData //需要传入
+                    };
+                    horizontal.series.push(seriesShadow);
+                }
+
+                if (opt.seriesData) {
+                    var seriesBar = {
+                        name: opt.seriesName,//需要传入
+                        type: 'bar',
+                        z: 2,
+                        itemStyle: {
+                            normal: {
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#3dc0e9' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#45e3cf' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    color: '#fff', //百分比颜色
+                                    fontSize: 9,
+                                },
+                                position: opt.labelPOS || 'insideLeft', //百分比格式
+                                formatter: opt.seriesFormatter || function (data) {
+                                    return data.value;
+                                },
+                            }
+                        },
+                        data: opt.seriesData //需要传入
+                    };
+                    horizontal.series.push(seriesBar);
+                }
+            }else{
+                //存在seriesArr 多数据无阴影的图标
+                for(var i=0;i<opt.seriesArr.length;i++){
+                    var item = opt.seriesArr[i];
+                    var obj = {
+                        name: item.name,//需要传入
+                        type: 'bar',
+                        z: 2,
+                        itemStyle: {
+                            normal: {
+                                color: item.color||{
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#3dc0e9' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#45e3cf' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    color: '#fff', //百分比颜色
+                                },
+                                position: opt.labelPOS || 'insideLeft', //百分比格式
+                                fontSize:10,
+                                formatter: opt.seriesFormatter || function (data) {
+                                    return data.value;
+                                },
+                            }
+                        },
+                        data: item.data //需要传入
+                    };
+                    horizontal.series.push(obj);
+                }
+
+            }
+
+            return horizontal;
+        }
+
+
+
+//合并对象
+        function concatObj(o,arr) {
+            var a= [];
+            for ( var i = 0 ; i<arr.length ; i++) {
+                var item = Object.assign({},o) ;
+                for (var key in arr[i] ) {
+                    item[key] = arr[i][key];
+                }
+                a.push(item)
+            }
+            return  a;
+        }
+
+// 数值转换   3为加,  大于等于7为 加单位(万)
+        // format_number_arr(数组,keys:需要格式化的字段)
+        function format_number_arr(arr,keys) {
+
+            if(arr instanceof Array){
+                for (var i=0;i<arr.length;i++){//是数组
+                    for (var j=0;j<keys.length;j++){
+                        arr[i][keys[j]] = format_number(arr[i][keys[j]]);
+                    }
+                }
+            }else{//是对象
+                for (var j=0;j<keys.length;j++){
+                    arr[keys[j]] = format_number(arr[keys[j]]);
+                }
+            }
+            return arr;
+        }
+
+
+        function format_number(n){
+            if(isNaN(Number(n))){ return 0;}
+            var b=parseFloat(n).toString();
+            var len=b.length;
+            var w = '', f = '' ;
+            // if(len>=7){
+            //     //大于7 要加 万字
+            //     w = '万';
+            //     f = '.' + ((b/10000).toFixed(2)).toString().split('.')[1];
+            //     b = b.slice(0,b.length-4);
+            //     len = b.length;
+            // }
+
+            if(len<=3){return b+f+w;}
+
+            var r=len%3,s = r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{3}/g).join(","):b.slice
+            (r,len).match(/\d{3}/g).join(",");
+
+            return s+f+w;
+        }
+
+
+        //转换数据 arr需要转换的数据   keys转换后字段名称(顺序和长度得与arrkey一致)   arrkey转换的字段名字(顺序和长度得与keys一致)
+        function tranData(arr,keys,arrkey) {
+            var a = [];
+            for (var i=0; i < arr.length;i++) {
+                var o = {};
+                for (var j=0; j < keys.length;j++) {
+                    o[keys[j]] = arr[i][arrkey[j]];
+                }
+                a.push(o)
+            }
+            return a;
+        }
+
+        function objToArr(o,key) {
+            var arr = [];
+            for (var i=0; i < o.length;i++) {
+                for (var k in o[i]) {
+                    if (k == key) {
+                        arr.push(o[i][key]);
+                    }
+                }
+            }
+            return arr;
+        }
+
+        function fullArr(length,val) {
+            var arr = [];
+            for (var i=0; i < length;i++) {
+                arr.push(val);
+            }
+            return arr;
+        }
+
+// script end
+    });
+
+</script>
+
+</script>
+</html>

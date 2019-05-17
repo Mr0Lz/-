@@ -1,0 +1,217 @@
+{
+  "code": 0,
+  "body": {
+    "todayAreaPayStat": [
+      {
+        "seq": "1",
+        "areaId": null,
+        "areaName": "其他",
+        "todayPayNum": 831,
+        "todayPayAmt": 5895
+      },
+      {
+        "seq": "2",
+        "areaId": "440305",
+        "areaName": "南山区",
+        "todayPayNum": 9824,
+        "todayPayAmt": 6198
+      },
+      {
+        "seq": "3",
+        "areaId": "440304",
+        "areaName": "福田区",
+        "todayPayNum": 9284,
+        "todayPayAmt": 3393
+      },
+      {
+        "seq": "4",
+        "areaId": "440312",
+        "areaName": "大鹏新区",
+        "todayPayNum": 9720,
+        "todayPayAmt": 3620
+      }
+    ],
+    "sevenDayPayStat": [
+      {
+        "date": "1日",
+        "payNum": 4724,
+        "payAmt": 8387
+      },
+      {
+        "date": "2日",
+        "payNum": 7927,
+        "payAmt": 8773
+      },
+      {
+        "date": "3日",
+        "payNum": 81,
+        "payAmt": 7533
+      },
+      {
+        "date": "4日",
+        "payNum": 4122,
+        "payAmt": 4232
+      },
+      {
+        "date": "5日",
+        "payNum": 7817,
+        "payAmt": 774
+      },
+      {
+        "date": "6日",
+        "payNum": 6294,
+        "payAmt": 3339
+      },
+      {
+        "date": "7日",
+        "payNum": 2677,
+        "payAmt": 4863
+      }
+    ],
+    "todayInstPayStat": [
+      {
+        "name": "蛇口人民医院海湾社康",
+        "todayPayNum": 4580,
+        "todayPayAmt": 2534
+      },
+      {
+        "name": "蛇口人民医院风华社康",
+        "todayPayNum": 2902,
+        "todayPayAmt": 9620
+      },
+      {
+        "name": "西丽人民医院牛成社区社康",
+        "todayPayNum": 4011,
+        "todayPayAmt": 6064
+      },
+      {
+        "name": "光明新区中心医院传麒山社区健康服务中心",
+        "todayPayNum": 112,
+        "todayPayAmt": 4919
+      },
+      {
+        "name": "翠海社区社康",
+        "todayPayNum": 9136,
+        "todayPayAmt": 7580
+      },
+      {
+        "name": "福田区口岸社区社康",
+        "todayPayNum": 5911,
+        "todayPayAmt": 132
+      },
+      {
+        "name": "福田区侨香村社区社康",
+        "todayPayNum": 1527,
+        "todayPayAmt": 18
+      },
+      {
+        "name": "宝安区中心医院黄麻布社康",
+        "todayPayNum": 6881,
+        "todayPayAmt": 8312
+      },
+      {
+        "name": "宝安区中心医院共乐社康",
+        "todayPayNum": 163,
+        "todayPayAmt": 1023
+      },
+      {
+        "name": "宝安区中心医院径贝社康",
+        "todayPayNum": 1237,
+        "todayPayAmt": 198
+      }
+    ],
+    "tradeStatTotal": {
+      "totalInstNum": 7847,
+      "todayPayNum": 9886,
+      "monthPayNum": 876,
+      "yearPayNum": 5546,
+      "todayPayAmt": 3255,
+      "monthPayAmt": 7290,
+      "yearPayAmt": 3157
+    },
+    "sixMonthPayStat": [
+      {
+        "date": "1月",
+        "payNum": 5536,
+        "payAmt": 6105
+      },
+      {
+        "date": "2月",
+        "payNum": 8497,
+        "payAmt": 8616
+      },
+      {
+        "date": "3月",
+        "payNum": 2281,
+        "payAmt": 6508
+      },
+      {
+        "date": "4月",
+        "payNum": 392,
+        "payAmt": 5771
+      },
+      {
+        "date": "5月",
+        "payNum": 1449,
+        "payAmt": 2207
+      },
+      {
+        "date": "6月",
+        "payNum": 7957,
+        "payAmt": 4038
+      }
+    ],
+    "todayInstHosPayStat": [
+      {
+        "name": "大鹏新区葵涌人民医院社康",
+        "todayPayNum": 5151,
+        "todayPayAmt": 3818
+      },
+      {
+        "name": "深圳市宝安区沙井人民医院社康",
+        "todayPayNum": 7252,
+        "todayPayAmt": 1772
+      },
+      {
+        "name": "深圳市罗湖医院集团社康",
+        "todayPayNum": 1473,
+        "todayPayAmt": 1099
+      },
+      {
+        "name": "332323",
+        "todayPayNum": 7227,
+        "todayPayAmt": 9754
+      },
+      {
+        "name": "深圳市宝安中医院社康",
+        "todayPayNum": 5817,
+        "todayPayAmt": 7191
+      },
+      {
+        "name": "宝安区福永人民医院社康",
+        "todayPayNum": 4994,
+        "todayPayAmt": 228
+      },
+      {
+        "name": "深圳市沙河医院社康",
+        "todayPayNum": 4168,
+        "todayPayAmt": 4375
+      },
+      {
+        "name": "深圳市南山区慢性病防治院社康",
+        "todayPayNum": 6265,
+        "todayPayAmt": 9574
+      },
+      {
+        "name": "中山大学附属第八医院社康",
+        "todayPayNum": 591,
+        "todayPayAmt": 421
+      },
+      {
+        "name": "深圳市宝安区石岩人民医院社康",
+        "todayPayNum": 8681,
+        "todayPayAmt": 5541
+      }
+    ]
+  }
+}

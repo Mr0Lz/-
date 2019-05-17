@@ -1,0 +1,275 @@
+{
+  "code": 0,
+  "body": {
+    "cardStat": {
+      "totalCardNum": 429783,
+      "totalUploadCardNum": 25830,
+      "monthCardNum": 1467,
+      "monthUploadCardNum": 5778,
+      "todayCardNum": 6062,
+      "todayUploadCardNum": 2516,
+      "totalUseCardNum": 3248,
+      "totalUploadUseCardNum": 6752,
+      "monthUseCardNum": 1692,
+      "monthUploadUseCardNum": 7260,
+      "todayUseCardNum": 3438,
+      "todayUploadUseCardNum": 6958
+    },
+    "daysCardStat": [
+      {
+        "date": "20",
+        "cardNum": 1963,
+        "useCardNum": 6589
+      },
+      {
+        "date": "29",
+        "cardNum": 3403,
+        "useCardNum": 2351
+      },
+      {
+        "date": "21",
+        "cardNum": 6054,
+        "useCardNum": 6260
+      },
+      {
+        "date": "22",
+        "cardNum": 4939,
+        "useCardNum": 7080
+      },
+      {
+        "date": "32",
+        "cardNum": 4291,
+        "useCardNum": 8617
+      },
+      {
+        "date": "54",
+        "cardNum": 6561,
+        "useCardNum": 5615
+      },
+      {
+        "date": "45",
+        "cardNum": 4654,
+        "useCardNum": 2107
+      }
+    ],
+    "monthsCardStat": [
+      {
+        "date": "45",
+        "cardNum": 2147,
+        "useCardNum": 5989
+      },
+      {
+        "date": "45",
+        "cardNum": 2606,
+        "useCardNum": 9405
+      },
+      {
+        "date": "45",
+        "cardNum": 5868,
+        "useCardNum": 6222
+      },
+      {
+        "date": "45",
+        "cardNum": 5325,
+        "useCardNum": 1497
+      },
+      {
+        "date": "54",
+        "cardNum": 9065,
+        "useCardNum": 1918
+      },
+      {
+        "date": "54",
+        "cardNum": 1471,
+        "useCardNum": 6721
+      }
+    ],
+    "areaUseCardStat": [
+      {
+        "areaId": "440304",
+        "areaName": "福田区",
+        "useCardNum": 5748,
+        "seq": "1"
+      },
+      {
+        "areaId": "440303",
+        "areaName": "罗湖区",
+        "useCardNum": 9967,
+        "seq": "2"
+      },
+      {
+        "areaId": "440308",
+        "areaName": "盐田区",
+        "useCardNum": 2714,
+        "seq": "3"
+      },
+      {
+        "areaId": "440305",
+        "areaName": "南山区",
+        "useCardNum": 1419,
+        "seq": "4"
+      },
+      {
+        "areaId": "440306",
+        "areaName": "宝安区",
+        "useCardNum": 9698,
+        "seq": "5"
+      },
+      {
+        "areaId": "440307",
+        "areaName": "龙岗区",
+        "useCardNum": 5030,
+        "seq": "6"
+      },
+      {
+        "areaId": "440311",
+        "areaName": "龙华区",
+        "useCardNum": 6916,
+        "seq": "7"
+      },
+      {
+        "areaId": "440310",
+        "areaName": "坪山区",
+        "useCardNum": 4236,
+        "seq": "8"
+      },
+      {
+        "areaId": "440309",
+        "areaName": "光明新区",
+        "useCardNum": 1023,
+        "seq": "9"
+      },
+      {
+        "areaId": "440312",
+        "areaName": "大鹏新区",
+        "useCardNum": 2166,
+        "seq": "10"
+      }
+    ],
+    "orgCardStat": [
+      {
+        "platOrgId": "440312",
+        "orgName": "组至性方是区分放员七。",
+        "cardNum": 12,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "采红上金指。",
+        "cardNum": 9448,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "理听在劳厂。",
+        "cardNum": 6718,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "带动总任。",
+        "cardNum": 9074,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "却六共叫解候具心市时。",
+        "cardNum": 2717,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "家便亲走后。",
+        "cardNum": 6710,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "打群精层值数我。",
+        "cardNum": 6549,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "争角等还斯响济作民做光半。",
+        "cardNum": 9656,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "加法给设。",
+        "cardNum": 3925,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "况技求市万海。",
+        "cardNum": 606,
+        "seq": "1"
+      }
+    ],
+    "orgUseCardStat": [
+      {
+        "platOrgId": "440312",
+        "orgName": "技了养斗消常。",
+        "useCardNum": 1961,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "劳更状斗形见大府角。",
+        "useCardNum": 9624,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "点回因都。",
+        "useCardNum": 7715,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "入实种部革工声。",
+        "useCardNum": 2965,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "基结别都去个无。",
+        "useCardNum": 5567,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "中打难公对心深。",
+        "useCardNum": 1363,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "矿心安自争你可。",
+        "useCardNum": 7213,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "军非里马上。",
+        "useCardNum": 2258,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "部律品指。",
+        "useCardNum": 8371,
+        "seq": "1"
+      },
+      {
+        "platOrgId": "440312",
+        "orgName": "给数也计近再。",
+        "useCardNum": 3342,
+        "seq": "1"
+      }
+    ],
+    "resTime": "2019-05-16 10:47:14"
+  }
+}

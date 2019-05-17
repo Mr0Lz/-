@@ -428,239 +428,220 @@
 
 </head>
 <body>
-	<div class="bigbg">
-		
-		<div class="main">  
+<div class="bigbg">
 
-			<div class="main-h">
-				<p class="main-h-title">电子健康卡数据一览平台</p>
-				<p class="main-h-time"><img src="./images/time_icon.png"><span>2019年04月25日  04:24:18</span></p>
-			</div>
+    <div class="main loadBg" id="main">
 
-			<!-- 左侧 -->
-			<div class="main-l l"> 
-				
-				<div class="main-l-box l">
-					<!--支付趋势（最近6月）  -->
-					<div class="mouth-box">
-						<p class="box-h">支付趋势（最近6月）</p>	
-					</div>
-					<!-- 支付趋势（最近7日） -->
-					<div class="day-box">
-						<p class="box-h">支付趋势（最近7日）</p>
-					</div>
-					
-					<!-- 区域用卡量排行（今日） -->
-					<div class="quantity-usage">
-						<p class="box-h">区域用卡量排行（今日）</p>
-								<ul class="quantity-list">
-									<li class="quantity-h">
-										<span>排名</span>
-										<span>区域</span>
-										<span>今日用卡量</span>
-									</li>
-									<li>
-										<span><small>1</small></span>
-										<span>宝安区</span>
-										<span>123123 231</span>
-									</li>
-									<li>
-										<span><small>2</small></span>
-										<span>宝安区</span>
-										<span>123123</span>
-									</li>
-									<li>
-										<span><small>3</small></span>
-										<span>宝安区</span>
-										<span>123123123123</span>
-									</li>
-									<li>
-										<span><small>4</small></span>
-										<span>宝安区</span>
-										<span></span>
-									</li>
-									<li>
-										<span><small>5</small></span>
-										<span>宝安区</span>
-										<span>123123123</span>
-									</li>
-									<li>
-										<span><small>6</small></span>
-										<span></span>
-										<span></span>
-									</li>
-									<li>
-										<span><small>7</small></span>
-										<span></span>
-										<span></span>
-									</li>
-									<li>
-										<span><small>8</small></span>
-										<span></span>
-										<span></span>
-									</li>
-									<li>
-										<span><small>9</small></span>
-										<span></span>
-										<span></span>
-									</li>
-									<li>
-										<span><small>10</small></span>
-										<span></span>
-										<span></span>
-									</li>
-								</ul>		
-					</div>
+        <div class="main-h">
+            <p class="main-h-title" >健康深圳社康移动支付数据一览平台</p>
+            <p class="main-h-time"><img src="./images/time_icon.png"><span>{{nowTime}}</span>
+                <!--社康总数-->
+                <span style="position:absolute;right: 0;">社康总数&nbsp;<small>{{format_totalInstNum}}</small></span>
+            </p>
+        </div>
 
-				</div><!-- main-l-box end -->
+        <!-- 左侧 -->
+        <div class="main-l l">
 
-				<div class="main-r-box r">
+            <div class="main-l-box l">
+                <!--支付趋势（最近6月）  -->
+                <div class="mouth-box">
+                    <p class="box-h">支付趋势（最近6月）</p>
+                    <div id="sixMonthChart" class="trend"></div>
+                </div>
+                <!-- 支付趋势（最近7日） -->
+                <div class="day-box">
+                    <p class="box-h">支付趋势（最近7日）</p>
+                    <div id="sevenDayChart" class="trend"></div>
+                </div>
 
-					<div class="box-item">
-						<div class="item-t">
-							<div class="l">
-								<p class="item-h">总发卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
-							<div class="l">
-								<p class="item-h">本月发卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
-							<div class="l">
-								<p class="item-h">今日发卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
+                <!-- 区域用卡量排行（今日） -->
+                <div class="quantity-usage">
+                    <p class="box-h">区域支付排行（今日）</p>
+                    <ul class="quantity-list">
+                        <li class="quantity-h">
+                            <span>排名</span>
+                            <span>区域</span>
+                            <span class="quantity-v">今日支付笔数</span>
+                            <span class="quantity-v">今日支付金额</span>
+                        </li>
 
-						</div>
-						<div class="item-b">
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-						</div>
-					</div>
+                        <li v-for=" (item,index)  in format_todayAreaPayStat" :key="index">
+                            <span><small :style="item.color ?  'background:'+item.color : '' ">{{item.seq}}</small></span>
+                            <span>{{item.areaName}}</span>
+                            <span class="quantity-v">{{item.todayPayNum}}</span>
+                            <span class="quantity-v">{{item.todayPayAmt}}</span>
+                        </li>
 
-					<div class="box-item">
-						<div class="item-t">
-							<div class="l">
-								<p class="item-h">总用卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
-							<div class="l">
-								<p class="item-h">本月用卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
-							<div class="l">
-								<p class="item-h">今日用卡量</p>
-								<p class="item-v">1,234,567,234</p>
-							</div>
+                    </ul>
+                </div>
 
-						</div>
-						<div class="item-b">
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-							<div class="item-upload l">
-							（上传量 <span>123,234,234</span>）
-							</div>
-						</div>
-					</div>
+            </div><!-- main-l-box end -->
+
+            <div class="main-r-box r">
+
+                <div class="box-item">
+                    <div class="item-t">
+                        <div class="l">
+                            <p class="item-h">今日支付金额</p>
+                            <p class="item-v">{{format_todayPayAmt}}</p>
+                        </div>
+                        <div class="l">
+                            <p class="item-h">本月支付金额</p>
+                            <p class="item-v">{{format_monthPayAmt}}</p>
+                        </div>
+                        <div class="l">
+                            <p class="item-h">本年支付金额</p>
+                            <p class="item-v">{{format_yearPayAmt}}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="box-item">
+                    <div class="item-t">
+                        <div class="l">
+                            <p class="item-h">今日支付笔数</p>
+                            <p class="item-v">{{format_todayPayNum}}</p>
+                        </div>
+                        <div class="l">
+                            <p class="item-h">本月支付笔数</p>
+                            <p class="item-v">{{format_monthPayNum}}</p>
+                        </div>
+                        <div class="l">
+                            <p class="item-h">本年支付笔数</p>
+                            <p class="item-v">{{format_yearPayNum}}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--
+                          <div class="box-item">
+                                <div class="item-t">
+                                    <div class="l">
+                                        <p class="item-h">总发卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">本月发卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">今日发卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+
+                                </div>
+                                <div class="item-b">
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-item">
+                                <div class="item-t">
+                                    <div class="l">
+                                        <p class="item-h">总用卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">本月用卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+                                    <div class="l">
+                                        <p class="item-h">今日用卡量</p>
+                                        <p class="item-v">1,234,567,234</p>
+                                    </div>
+
+                                </div>
+                                <div class="item-b">
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                    <div class="item-upload l">
+                                        （上传量 <span>123,234,234</span>）
+                                    </div>
+                                </div>
+                            </div>
+
+            -->
+
+                <!-- 深圳地图 -->
+                <div class="map-chart" id="mapChart">
+                </div>
+
+            </div><!--main-r-box end-->
 
 
-					<!-- 深圳地图 -->
-					<div class="map">深圳地图</div>
 
+        </div>
 
-				</div><!--main-r-box end-->
+        <!-- 右侧 -->
+        <div class="main-r r">
 
+            <div class="main-r-container">
+                <div class="chart-box">
+                    <p class="box-h">社康机构支付排行（今日）</p>
+                    <div id="todayInstChart" class="trend2"></div>
+                </div>
 
+                <div class="chart-box">
+                    <p class="box-h">社康支付医院排行（今日）</p>
+                    <div id="todayInstHosChart" class="trend2"></div>
+                </div>
+            </div>
 
-			</div>
+        </div>
 
-			<!-- 右侧 -->
-			<div class="main-r r">
+    </div>
 
-				<div class="main-r-container">
-					<div class="chart-box">
-						<p class="box-h">医院用卡量排行（今日）</p>	
-					</div>
-
-					<div class="chart-box">
-						<p class="box-h">医院发卡量排行（今日）</p>	
-					</div>
-				</div>
-
-			</div>
-			
-		</div>
-
-	</div>
+</div>
 </body>
 <script type="text/javascript">
 
 
-//兼容IE Object.assign
-if (typeof Object.assign != 'function') {
-  Object.assign = function(target) {
-    'use strict';
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object');
+    //兼容IE Object.assign
+    if (typeof Object.assign != 'function') {
+        Object.assign = function(target) {
+            'use strict';
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+
+            target = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var source = arguments[index];
+                if (source != null) {
+                    for (var key in source) {
+                        if (Object.prototype.hasOwnProperty.call(source, key)) {
+                            target[key] = source[key];
+                        }
+                    }
+                }
+            }
+            return target;
+        };
     }
 
-    target = Object(target);
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index];
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-    }
-    return target;
-  };
-}
+   // var main = null;//vue 实例对象
 
-
-
-
-//获取时间字符串
-function getinputDate(d,formatDate){
-	if(d && (typeof d) == 'string'&&formatDate){
-		return d.replace(/\s/ig,'').split(formatDate);
-	}
-	return ;
-}
-
-
-// 页面代码
+    // 页面代码
     $(function () {
-    	//加载图
-        var load =function (padding) {
-            return '<img src="./images/load.gif" style="display: block;width: 0.5rem;margin:0 auto;padding:'+padding+'" alt="">';
-        };
-        var lineDataMax = 200000;//柱状图阴影最大值预设  社康支付 和 医院支付
-        var payMax = 1000000;//柱状图阴影最大值预设 支付宝 和 微信支付
-        var mapChart = null;//地图对象
-        var columnarChart3 = null;//社康渠道分布
-        var columnarChart1=null;//社康机构支付排行
-        var columnarChart2=null;//社康支付医院排行
-        var chartLoadConfig = {//echart 加载样式
-            text: '',
-            color: '#20dbfd',
-            textColor: '#000',
-            maskColor: '#3953717a',
-            zlevel: 0
-        };
+        var lineDataMax = 200000;//柱状图阴影最大值预设
+        var payMax = 1000000;//柱状图阴影最大值预设
+        var main = null;//vue 实例对象
+
         //城市的配置
         var cityConfig = {
             '龙华区': {
@@ -695,192 +676,477 @@ function getinputDate(d,formatDate){
             }
         };
 
+        var vueObj={
+            el: '#main',
+            data : {
+                apiUrl:'./js/xkypay.json',
+                now:new Date(),
+                type:'GET',
+                _timer:'',
+                loopTime:300000,//5分钟刷一次
+                mapChart:'',//地图对象
+                sixMonthChart:'',//支付趋势统计(近六个月)的图标对象
+                sevenDayChart:'',//支付趋势统计(近七日)的图标对象
+                todayInstChart:'',//今日社康机构支付排行统计（top10倒序）的图标对象
+                todayInstHosChart:'',//今日社康所属医院支付排行（top10倒序）的图标对象
+                todayPayNum:'0',//今日支付笔数
+                todayPayAmt:'0',//今日支付金额
+                monthPayNum:'0',//本月支付笔数
+                monthPayAmt:'0',//本月支付金额
+                yearPayNum:'0',//本年度支付笔数
+                yearPayAmt:'0',//本年度支付金额
+                totalInstNum:'0',//社康总数
+                todayAreaPayStat:[],//今日区支付排行统计
+                todayInstPayStat:[],//今日社康机构支付排行统计（top10倒序）
+                todayInstHosPayStat:[],//今日社康所属医院支付排行（top10倒序）
+                sevenDayPayStat:[],//支付趋势统计(近七日)
+                sixMonthPayStat:[],//支付趋势统计(近六个月)
 
-
-        //initPage();
-
-
-	    
-
-//初始化函数 
-        function initPage() {
-
-
-            //初始化地图
-            disposed(mapChart);
-            mapChart = echarts.extendsMap('mapChart', {
-                //bgColor: '#154e90', // 画布背景色
-                bgColor: 'rgba(0,0,0,0)',
-                mapName: '深圳市',    // 地图名
-                goDown: false,       // 是否下钻
-                // 下钻回调
-                callback: function (name, option, instance) {
-                    console.log(name, option, instance);
+            },
+            computed:{
+                nowTime: function () {
+                    var s = this.now.getFullYear() + '年' + (this.now.getMonth() + 1)+ '月' + this.now.getDate() + '日\n'
+                            + this.now.getHours() + ':' + this.now.getMinutes() + ':' + this.now.getSeconds();
+                    return s;
                 },
-                cityConfig: cityConfig,
-                // 数据展示
-                //data: [
-                //]
-            });
+                //数值加,
+                format_todayPayNum:function(){
+                    return format_number(this.todayPayNum);
+                },
+                format_todayPayAmt:function(){
+                    return format_number(this.todayPayAmt);
+                },
+                format_monthPayNum:function(){
+                    return format_number(this.monthPayNum);
+                },
+                format_monthPayAmt:function(){
+                    return format_number(this.monthPayAmt);
+                },
+                format_yearPayNum:function(){
+                    return format_number(this.yearPayNum);
+                },
+                format_yearPayAmt:function(){
+                    return format_number(this.yearPayAmt);
+                },
+                format_totalInstNum:function () {
+                    return format_number(this.totalInstNum);
+                },
+                format_todayAreaPayStat:function () {
+                    var vm = this,arr=[];
+                    for (var i=0 ;i<vm.todayAreaPayStat.length;i++) {//给列表加颜色
+                        if(!(cityConfig[vm.todayAreaPayStat[i].areaName])){continue;}
+                        var o={};
+                        o.seq = vm.todayAreaPayStat[i].seq;
+                        o.color = cityConfig[vm.todayAreaPayStat[i].areaName].color;
+                        o.todayPayNum = format_number(vm.todayAreaPayStat[i].todayPayNum);
+                        o.todayPayAmt = format_number(vm.todayAreaPayStat[i].todayPayAmt);
+                        o.areaName = vm.todayAreaPayStat[i].areaName;
+                        arr.push(o);
+                    }
+                    return arr;
+                }
+            },
+            watch:{//在watch更新echart data
+                todayAreaPayStat:function () {
+                    var vm = this;
+                    console.log('change map');
+                    vm.mapChart.setData(tranData(vm.todayAreaPayStat, ['name', 'todayPayNum', 'todayPayAmt'], ['areaName', 'todayPayNum', 'todayPayAmt']));//更新地图数据
+                },
+                sevenDayPayStat:function () {//支付趋势统计(近七日)
+                    var vm = this;
+                    console.log('change 近七日');
+                    vm.sevenDayChart.setOption(columnarChartOption({
+                        seriesShadow : 20,
+                        seriesData:fullArr(vm.sevenDayPayStat.length,lineDataMax),
+                        seriesBar:{name:'笔数',data:objToArr(vm.sevenDayPayStat,'payNum')},
+                        seriesLine:{name:'金额',data:objToArr(vm.sevenDayPayStat,'payAmt')},
+                        xAxis:[{data: objToArr(vm.sevenDayPayStat,'date')}],
+                        xAxisRotate:false,
+                        yAxis:[{
+                            name: '笔数'
+                        }, {
+                            name: '金额'
+                        }]
+                    }));
 
-
-
-            //社康渠道分布
-            disposed(columnarChart3);
-            columnarChart3 = echarts.init(document.getElementById('columnarChart3'));
-
-
-            //社康机构支付排行
-            disposed(columnarChart1);
-            columnarChart1 = echarts.init(document.getElementById('columnarChart1'));
-
-            //社康支付医院排行
-            disposed(columnarChart2);
-            columnarChart2 = echarts.init(document.getElementById('columnarChart2'));
-
-            //异步去请求数据
-            setTimeout(function () {
-
-
-                //请求页面数据
-                $.ajax({
-                    url: './js/data.json',
-                    type: 'GET',
-                    dataType: 'json',
-                    beforeSend: function () {
-                        //列表添加加载图片
-                        $('#regionalInstitution').html(load('1.5rem 0'));
-                        $('#regionalPayment').html(load('1.5rem 0'));
-                        $('#boxList').html(load('0.65rem 0'));
-                        mapChart.showLoading(chartLoadConfig);//显示地图加载动画
-                        columnarChart3.showLoading(chartLoadConfig);//社康渠道分布
-                        columnarChart1.showLoading(chartLoadConfig);//社康机构支付排行
-                        columnarChart2.showLoading(chartLoadConfig);//社康支付医院排行
-                    },
-                    success: function (ret) {
-                        console.log(ret);
-                        if (JSON.stringify(ret) == '{}') {
-                            console.log('没数据');
-                            return
-                        }
-                        var areaPayStat = JSON.parse(ret.areaPayStat);//当前区支付排行统计数据
-                        var instOpenStat = JSON.parse(ret.instOpenStat);//区域社康开通数量统计
-                        var payChnStat = JSON.parse(ret.payChnStat);//支付渠道分布统计
-                        var instPayStat = JSON.parse(ret.instPayStat);//社康机构支付排行统计
-                        var instHosPayStat = JSON.parse(ret.instHosPayStat);//社康机构支付排行统计
-
-                        //当前区支付排行统计 列表
-                        //加逗号 format_number_arr(数组,keys:需要格式化的字段)
-                       $('#regionalPayment').html(template( $('#regionalPaymentTpl').html() ,{data:format_number_arr(areaPayStat,['payNum','payAmt'])}) );
-                       $('#boxList').html( template( $('#boxListTpl').html() ,{data:{tradeStat:format_number_arr(ret.tradeStat,['newAddInst','payAmt','payNum','todayPayAmt','todayPayNum','totalInstNum','totalPayAmt','totalPayNum','yesterdayPayAmt','yesterdayPayNum'])}}) );
-
-                       $('#regionalInstitution').html( template( $('#regionalInstitutionTpl').html() , {data:format_number_arr(instOpenStat,['totalNum','newAddNum'])} ));
-
-
-                        //加载地图
-                        mapChart.hideLoading();//关闭地图加载动画
-                        mapChart.setData(tranData(areaPayStat, ['name', 'payNum', 'payAmt'], ['areaName', 'payNum', 'payAmt']));//异步更新地图数据
-
-
-
-
-                        //加载社康渠道分布 柱状是支付笔数，折线是支付金额
-                        columnarChart3.hideLoading();
-                        columnarChart3.setOption(columnarChartOption({
-                            legend:['笔数','金额'],
-                            seriesShadow : 20,
-                            seriesData:[payMax,payMax],
-                            seriesBar:{name:'笔数',data:objToArr(payChnStat,'payNum')},
-                            seriesLine:{name:'金额',data:objToArr(payChnStat,'payAmt')},
-                            xAxis:[{data: ['支付宝','微信']}],
-                            yAxis:[{
-                                        name: '笔数'
+                },
+                sixMonthPayStat:function () {
+                    //支付趋势（最近6月）图表
+                    var vm = this;
+                    vm.sixMonthChart.setOption(columnarChartOption({
+                        seriesShadow : 20,
+                        seriesData:fullArr(vm.sixMonthPayStat.length,lineDataMax),
+                        seriesBar:{name:'笔数',data:objToArr(vm.sixMonthPayStat,'payNum')},
+                        seriesLine:{name:'金额',data:objToArr(vm.sixMonthPayStat,'payAmt')},
+                        xAxis:[{data: objToArr(vm.sixMonthPayStat,'date')}],
+                        xAxisRotate:false,
+                        yAxis:[{
+                            name: '笔数'
+                        }, {
+                            name: '金额'
+                        }]
+                    }));
+                },
+                todayInstPayStat : function(){//社康机构支付排行（今日）
+                    var vm = this;
+                    vm.todayInstChart = echarts.init(document.getElementById('todayInstChart'));
+                    vm.todayInstChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.todayInstPayStat,'name').reverse(),
+                        grid: {
+                            left: '4%',
+                            right: '0%',
+                            top: '6%',
+                            width:'97%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesArr:[
+                            {
+                                name:'今日支付笔数',
+                                data:objToArr(vm.todayInstPayStat,'todayPayNum').reverse()
+                            },
+                            {
+                                name:'今日支付金额',
+                                data:objToArr(vm.todayInstPayStat,'todayPayAmt').reverse(),
+                                color:{
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
                                     }, {
-                                        name: '金额'
-                                    }]
-                        }));
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+                },
+                todayInstHosPayStat : function () {
+                    //今日社康所属医院支付排行（top10倒序）
+                    var vm = this;
+                    vm.todayInstHosChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.todayInstHosPayStat,'name').reverse(),
+                        legend:['今日支付笔数','今日支付金额'],
+                        grid: {
+                            left: '4%',
+                            right: '0%',
+                            top: '6%',
+                            width:'97%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesArr:[
+                            {
+                                name:'今日支付笔数',
+                                data:objToArr(vm.todayInstHosPayStat,'todayPayNum').reverse()
+                            },
+                            {
+                                name:'今日支付金额',
+                                data:objToArr(vm.todayInstHosPayStat,'todayPayAmt').reverse(),
+                                color:{
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        ]
+                    }));
+                }
+            },
+            created : function (){
+                var vm = this;
+                console.log('初始化页面');
+                vm.init();//初始化页面
+                vm.loopData(vm.loopTime,function (d) {
+                    vm.now = new Date();//更新成功是更新时间
+                    console.log('loopDataCB');
+                })
+            },
+            methods : {
+                init:function(){
+                    var vm = this;
+                    vm.POST(function(ret){
+                        $(vm.$el).removeClass('loadBg');
+                        vm.setData(ret);
+                        vm.initMap();
+                        vm.initSixMonthChart();
+                        vm.initSevenDayChart();
+                        vm.initTodayInstPayStatChart();
+                        vm.initTodayInstHosPayStat();
+                        vm.wResize();
+                        console.log(vm.$data,'完成页面初始化');
+                    });
+                },
+                loopData:function (time,fn) {
+                    var vm = this;
+                    vm._timer=setTimeout(function () {
+                        console.log('请求数据');
+                        vm.POST(function(ret){
+                            vm.setData(ret);
+                            fn(ret);
+                            console.log('请求成功,返回数据,启动定时器:',time);
+                            vm.loopData(time,fn);
+                        });
 
-                        //社康机构支付排行
-                        columnarChart1.hideLoading();
-                        columnarChart1.setOption(columnarChartOption({
-                            legend:['笔数','金额'],
-                            seriesShadow : 20,
-                            seriesData:fullArr(instPayStat.length,lineDataMax),
-                            seriesBar:{name:'笔数',data:objToArr(instPayStat,'payNum')},
-                            seriesLine:{name:'金额',data:objToArr(instPayStat,'payAmt')},
-                            xAxis:[{data: objToArr(instPayStat,'name')}],
-                            xAxisRotate:true,
-                            grid: {height: '44%',top:'30'},
-                            yAxis:[{
-                                name: '笔数'
-                            }, {
-                                name: '金额'
-                            }]
-                        }));
-                        //社康支付医院排行
-                        columnarChart2.hideLoading();
-                        columnarChart2.setOption(columnarChartOption({
-                            legend:['笔数','金额'],
-                            seriesShadow : 20,
-                            seriesData:fullArr(instPayStat.length,lineDataMax),
-                            seriesBar:{name:'笔数',data:objToArr(instHosPayStat,'payNum')},
-                            seriesLine:{name:'金额',data:objToArr(instHosPayStat,'payAmt')},
-                            xAxis:[{data: objToArr(instHosPayStat,'name')}],
-                            xAxisRotate:true,
-                            grid: {height: '44%',top:'30'},
-                            yAxis:[{
-                                name: '笔数'
-                            }, {
-                                name: '金额'
-                            }]
-                        }));
-
-                        //适应屏幕
-                        $(window).off('resize', winResize);
-                        $(window).on('resize', winResize);
-
-                        function winResize() {
-                            mapChart.resize();
-                            pieChart.resize();
-                            columnarChart3.resize();
-                            columnarChart1.resize();
-                            columnarChart2.resize();
+                    },time);
+                },
+                POST:function (success) {
+                    var vm = this;
+                   //请求页面数据
+                    $.ajax({
+                        url: vm.apiUrl,
+                        type: vm.type,
+                        dataType: 'json',
+                        success: function (ret) {
+                        if (JSON.stringify(ret) == '{}') {
+                                console.log('没数据');
+                                return
+                            }
+                            success(ret);
                         }
+                    });
 
-
-                    }
-                });//请求页面数据end
-
-
-            }, 0);
-
-        }
-
-
-
-//折柱混合
-        function columnarChartOption (opt){
-
-            var option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#fff'
-                        }
+                },
+                setData(d){
+                    var vm = this;
+                    for (var k in d ) {
+                        if (d.hasOwnProperty(k)) {
+                            if(d[k] instanceof Object && !(d[k] instanceof Array) ){
+                                    vm.setData(d[k]);
+                                } else {
+                                    vm[k] = d[k];
+                                }
+                         }
                     }
                 },
-                // toolbox: {
-                //     feature: {
-                //         dataView: {show: true, readOnly: false},
-                //         magicType: {show: true, type: ['line', 'bar']},
-                //         restore: {show: true},
-                //         saveAsImage: {show: true}
-                //     }
-                // },
-                legend: {
-                    data:opt.legend,
+            wResize:function(){
+
+                var vm = this;
+                //适应屏幕
+                $(window).on('resize', winResize);
+                function winResize() {
+                    if(vm.mapChart){
+                        vm.mapChart.resize();
+                    }
+                    if(vm.sixMonthChart) {
+                        vm.sixMonthChart.resize();
+                    }
+                    if(vm.sevenDayChart) {
+                        vm.sevenDayChart.resize();
+                    }
+                    if(vm.todayInstChart) {
+                        vm.todayInstChart.resize();
+                    }
+                    if(vm.todayInstHosChart) {
+                        vm.todayInstHosChart.resize();
+                    }
+                }
+
+            },
+            initMap:function(){
+                    //初始化地图
+                    var vm = this;
+                    vm.mapChart = echarts.extendsMap('mapChart', {
+                        //bgColor: '#154e90', // 画布背景色
+                        bgColor: 'rgba(0,0,0,0)',
+                        mapName: '深圳市',    // 地图名
+                        goDown: false,       // 是否下钻
+                        // 下钻回调
+                        callback: function (name, option, instance) {
+                            console.log(name, option, instance);
+                        },
+                        cityConfig: cityConfig,
+                        // 数据展示
+                        //data: [
+                        //]
+                    });
+
+                    //加载地图
+                    vm.mapChart.setData(tranData(vm.todayAreaPayStat, ['name', 'todayPayNum', 'todayPayAmt'], ['areaName', 'todayPayNum', 'todayPayAmt']));//更新地图数据
+                },
+                initSixMonthChart : function () {
+                    //支付趋势（最近6月）图表
+                    var vm = this;
+                    vm.sixMonthChart = echarts.init(document.getElementById('sixMonthChart'));
+                    vm.sixMonthChart.setOption(columnarChartOption({
+                        legend:['笔数','金额'],
+                        seriesShadow : 20,
+                        seriesData:fullArr(vm.sixMonthPayStat.length,lineDataMax),
+                        seriesBar:{name:'笔数',data:objToArr(vm.sixMonthPayStat,'payNum')},
+                        seriesLine:{name:'金额',data:objToArr(vm.sixMonthPayStat,'payAmt')},
+                        xAxis:[{data: objToArr(vm.sixMonthPayStat,'date')}],
+                        xAxisRotate:false,
+                        grid: {height: '70%',width:'90%',top:'14%',left:'6%'},
+                        yAxis:[{
+                            name: '笔数'
+                        }, {
+                            name: '金额'
+                        }]
+                    }));
+                } ,
+                initSevenDayChart:function () {
+                    // 势统计(近七日)
+                    var vm = this;
+                    vm.sevenDayChart = echarts.init(document.getElementById('sevenDayChart'));
+                    vm.sevenDayChart.setOption(columnarChartOption({
+                        legend:['笔数','金额'],
+                        seriesShadow : 20,
+                        seriesData:fullArr(vm.sevenDayPayStat.length,lineDataMax),
+                        seriesBar:{name:'笔数',data:objToArr(vm.sevenDayPayStat,'payNum')},
+                        seriesLine:{name:'金额',data:objToArr(vm.sevenDayPayStat,'payAmt')},
+                        xAxis:[{data: objToArr(vm.sevenDayPayStat,'date')}],
+                        xAxisRotate:false,
+                        grid: {height: '70%',width:'90%',top:'14%',left:'6%'},
+                        yAxis:[{
+                            name: '笔数'
+                        }, {
+                            name: '金额'
+                        }]
+                    }));
+                },
+                initTodayInstPayStatChart:function () {//今日社康机构支付排行统计（top10倒序）
+                    var vm = this;
+                    vm.todayInstChart = echarts.init(document.getElementById('todayInstChart'));
+                    vm.todayInstChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.todayInstPayStat,'name').reverse(),
+                        legend:['今日支付笔数','今日支付金额'],
+                        grid: {
+                            left: '4%',
+                            right: '0%',
+                            top: '6%',
+                            width:'97%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesArr:[
+                            {
+                                name:'今日支付笔数',
+                                data:objToArr(vm.todayInstPayStat,'todayPayNum').reverse()
+                            },
+                            {
+                                name:'今日支付金额',
+                                data:objToArr(vm.todayInstPayStat,'todayPayAmt').reverse(),
+                                color:{
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#6bde45' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#e22a11' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                            ]
+                    }));
+
+                },
+                initTodayInstHosPayStat:function () {//今日社康所属医院支付排行（top10倒序）
+                    var vm = this;
+                    vm.todayInstHosChart = echarts.init(document.getElementById('todayInstHosChart'));
+                    vm.todayInstHosChart.setOption(horizontalOption({
+                        yAxisData:objToArr(vm.todayInstHosPayStat,'name').reverse(),
+                        legend:['今日支付笔数','今日支付金额'],
+                        grid: {
+                            left: '4%',
+                            right: '0%',
+                            top: '6%',
+                            width:'97%',
+                            height: '100%',
+                            containLabel: true
+                        },
+                        seriesArr:[
+                            {
+                                name:'今日支付笔数',
+                                data:objToArr(vm.todayInstHosPayStat,'todayPayNum').reverse()
+                            },
+                            {
+                                name:'今日支付金额',
+                                data:objToArr(vm.todayInstHosPayStat,'todayPayAmt').reverse(),
+                                color:{
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: '#6bde45' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: '#e22a11' // 100% 处的颜色
+                                        }],
+                                        globalCoord: false, // 缺省为 false
+                                    }
+                            }
+                        ]
+                    }));
+                }
+
+
+            }
+        };
+
+        /*demo
+        horizontal1.setOption(horizontalOption({
+                                    yAxisData:objToArr(orgCardStat,'orgName'),
+                                    seriesShadowData:fullArr(orgCardStat.length,lineDataMax),
+                                    seriesName:'发卡量',
+                                    seriesData:objToArr(orgCardStat,'cardNum')
+                                }));
+
+        main = new Vue({
+            el:'#main',
+            data: {
+                number: 0,
+                tweenedNumber: 0
+            },
+            computed: {
+                animatedNumber: function() {
+                    return this.tweenedNumber.toFixed(0);
+                }
+            },
+            watch: {
+                number: function(newValue) {
+                    //TweenLite.to(this.$data, 0.8, { tweenedNumber: newValue });
+                    this.$data.tweenedNumber=newValue;
+                }
+            }
+
+        });
+
+        setInterval(function () {
+            main.$data.number   = main.$data.number+100;
+        },1000)*/
+
+        main = new Vue(vueObj);
+
+
+//横向图 opt.yAxisData Y轴 名称;  opt.seriesShadowData阴影data(只有一类型数据可以用);  opt.seriesName 柱状图的名称; opt.seriesFormatter 柱状图的label; opt.seriesData 柱状图的data
+        function horizontalOption(opt){
+            var horizontal = {
+                tooltip: {
+                    trigger : 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter:function(d){
+                        var s = '';
+                        if(d[0].name.length>10){
+                            s+= d[0].name.substr(0,10)+'<br/>'+d[0].name.substr(10,d[0].name.length)+'<br/>';
+                        }else{
+                            s+= d[0].name+'<br/>';
+                        }
+                        for (var i=0 ; i<d.length ; i++) {
+                            var data = d[i];
+                            s+=data.seriesName+':'+data.value+'<br/>';
+                        }
+                        return s;
+                    }
+                },
+                legend:{
+                    left:0,
                     textStyle:{
                         color:'#fff',
                         fontSize:8
@@ -888,10 +1154,174 @@ function getinputDate(d,formatDate){
                     itemWidth : 10,
                     itemHeight : 10
                 },
+                grid: opt.grid || {
+                    left: '0%',
+                    right: '0%',
+                    top: '0%',
+                    width:'100%',
+                    height: '100%',
+                    containLabel: true
+                },
+                xAxis: {
+                    show:false,
+                },
+                yAxis: {
+                    type: 'category',
+                    data:opt.yAxisData,
+                    axisLabel: {
+                        color: '#fff',
+                        align:opt.yAxisAlign || '',
+                        formatter: function(params) {
+                            if(params.length>10){
+                                return params.substr(0,10)+'...';
+                            }
+                            return params;
+                        },
+                    },
+                    axisTick: {
+                        show: false, //隐藏Y轴刻度
+                    },
+                    axisLine: {
+                        show: false, //隐藏Y轴线段
+                    }
+                },
                 series: []
             };
 
-            var xAxisObj = {
+            if(opt.legend){
+                horizontal.legend.data = opt.legend;
+            }
+
+            if(!opt.seriesArr) { // 不存在seriesArr 单数据带阴影的图标
+                //阴影
+                if (opt.seriesShadowData) {
+                    var seriesShadow = {
+                        show: true,
+                        type: 'bar',
+                        barGap: '-100%',
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        tooltip: {
+                            show: false
+                        },
+                        z: 1,
+                        data: opt.seriesShadowData //需要传入
+                    };
+                    horizontal.series.push(seriesShadow);
+                }
+
+                if (opt.seriesData) {
+                    var seriesBar = {
+                        name: opt.seriesName,//需要传入
+                        type: 'bar',
+                        z: 2,
+                        itemStyle: {
+                            normal: {
+                                color: {
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#3dc0e9' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#45e3cf' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    color: '#fff', //百分比颜色
+                                    fontSize: 9,
+                                },
+                                position: opt.labelPOS || 'insideLeft', //百分比格式
+                                formatter: opt.seriesFormatter || function (data) {
+                                    return data.value + '张';
+                                },
+                            }
+                        },
+                        data: opt.seriesData //需要传入
+                    };
+                    horizontal.series.push(seriesBar);
+                }
+            }else{
+                //存在seriesArr 多数据无阴影的图标
+                for(var i=0;i<opt.seriesArr.length;i++){
+                    var item = opt.seriesArr[i];
+                    var obj = {
+                        name: item.name,//需要传入
+                        type: 'bar',
+                        z: 2,
+                        itemStyle: {
+                            normal: {
+                                color: item.color||{
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: '#3dc0e9' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#45e3cf' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                textStyle: {
+                                    color: '#fff', //百分比颜色
+                                },
+                                position: opt.labelPOS || 'insideLeft', //百分比格式
+                                fontSize:10,
+                                formatter: opt.seriesFormatter || function (data) {
+                                    return data.value;
+                                },
+                            }
+                        },
+                        data: item.data //需要传入
+                    };
+                    horizontal.series.push(obj);
+                }
+
+            }
+
+            return horizontal;
+        }
+
+
+//折柱混合
+                function columnarChartOption (opt){
+
+                var option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            crossStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    legend: {
+                        left:0,
+                        data:opt.legend,
+                        textStyle:{
+                            color:'#fff',
+                            fontSize:8
+                        },
+                        itemWidth : 10,
+                        itemHeight : 10
+                    },
+                    series: []
+                };
+
+                var xAxisObj = {
                     type: 'category',
                     axisPointer: {
                         type: 'shadow'
@@ -917,29 +1347,30 @@ function getinputDate(d,formatDate){
 
                 };
 
-            if(opt.xAxisRotate){  //垂直文字
-                xAxisObj.axisLabel.formatter = function(value, index) {
-                    var arr = value.split('');
-                    var label = '';
-                    for (var i = 0; i < arr.length; i++) {
-                        if (i>5){
-                            label += '...';
-                            break
-                        }else{
-                            label += arr[i] + '\n';
+                if(opt.xAxisRotate){  //垂直文字
+                    xAxisObj.axisLabel.formatter = function(value, index) {
+                        var arr = value.split('');
+                        var label = '';
+                        for (var i = 0; i < arr.length; i++) {
+                            if (i>5){
+                                label += '...';
+                                break
+                            }else{
+                                label += arr[i] + '\n';
+                            }
                         }
+                        return label;
                     }
-                    return label;
                 }
-            }
 
-            if(opt.grid){
-                option.grid = opt.grid;
-            }
+                if(opt.grid){
+                    option.grid = opt.grid;
+                }
 
 
-            var yAxisObj = {
+                var yAxisObj = {
                     type: 'value',
+                    nameLocation :'start',
                     axisLabel: {
                         show: false,
                         textStyle: {
@@ -962,9 +1393,9 @@ function getinputDate(d,formatDate){
                         show :false
                     }
                 };
-            //阴影
-            var seriesShadow = {
-                // For shadow
+                //阴影
+                var seriesShadow = {
+                    // For shadow
                     type: 'bar',
                     itemStyle: {
                         normal: {color: '#1f3459'}
@@ -978,28 +1409,34 @@ function getinputDate(d,formatDate){
                 };
 
 
-            //柱状
-            var  seriesBar = {
+                //柱状
+                var  seriesBar = {
                     type:'bar',
                     name:opt.seriesBar.name,
                     data:opt.seriesBar.data,
+                    label:{
+                        position:'top',
+                        color: '#fff',
+                        fontSize: 10,
+                        show: true
+                    },
                     itemStyle : {
-                        // 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
-                        color: {
-                            type: 'linear',
+                // 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
+                color: {
+                    type: 'linear',
                             x: 0.5,
                             y: 0.5,
                             x2: 1,
                             y2: 0.5,
                             colorStops: [{
-                                offset: 0, color: '#75d9ea' // 0% 处的颜色
-                            }, {
-                                offset: 1, color: '#0381ff' // 100% 处的颜色
-                            }],
+                        offset: 0, color: '#75d9ea' // 0% 处的颜色
+                    }, {
+                        offset: 1, color: '#0381ff' // 100% 处的颜色
+                    }],
                             global: false // 缺省为 false
-                        }
-                    }
-                };
+                }
+            }
+            };
 
                 if(opt.seriesShadow){
                     seriesShadow.barWidth = opt.seriesShadow;
@@ -1010,122 +1447,116 @@ function getinputDate(d,formatDate){
                     name:opt.seriesLine.name,
                     data:opt.seriesLine.data,
                     type:'line',
-                    itemStyle : {
-                        color : "#fff"
+                    lineStyle  : {
+                        color: '#fff'
+                    },
+                    itemStyle  :{
+                        borderWidth:3,
+                        borderColor:'#c32114',
+                        color : "#c32114",
+                        shadowColor: "#c32114",
+                        shadowBlur: 2
                     },
                     yAxisIndex: 1
                 };
 
-            option.xAxis = concatObj(xAxisObj,opt.xAxis) ;
-            option.yAxis = concatObj(yAxisObj,opt.yAxis) ;
-            option.series.push(seriesShadow);
-            option.series.push(seriesBar);
-            option.series.push(seriesLine);
-            return option;
-        }
+                option.xAxis = concatObj(xAxisObj,opt.xAxis) ;
+                option.yAxis = concatObj(yAxisObj,opt.yAxis) ;
+                option.series.push(seriesShadow);
+                option.series.push(seriesBar);
+                option.series.push(seriesLine);
+                return option;
+            }
 
 //合并对象
-        function concatObj(o,arr) {
-            var a= [];
-            for ( var i = 0 ; i<arr.length ; i++) {
-                var item = Object.assign({},o) ;
-                for (var key in arr[i] ) {
-                    item[key] = arr[i][key];
+            function concatObj(o,arr) {
+                var a= [];
+                for ( var i = 0 ; i<arr.length ; i++) {
+                    var item = Object.assign({},o) ;
+                    for (var key in arr[i] ) {
+                        item[key] = arr[i][key];
+                    }
+                    a.push(item)
                 }
-                a.push(item)
+                return  a;
             }
-            return  a;
-        }
 
 // 数值转换   3为加,  大于等于7为 加单位(万)
-       // format_number_arr(数组,keys:需要格式化的字段)
-        function format_number_arr(arr,keys) {
+            // format_number_arr(数组,keys:需要格式化的字段)
+            function format_number_arr(arr,keys) {
 
-            if(arr instanceof Array){
-                for (var i=0;i<arr.length;i++){//是数组
+                if(arr instanceof Array){
+                    for (var i=0;i<arr.length;i++){//是数组
+                        for (var j=0;j<keys.length;j++){
+                            arr[i][keys[j]] = format_number(arr[i][keys[j]]);
+                        }
+                    }
+                }else{//是对象
                     for (var j=0;j<keys.length;j++){
-                        arr[i][keys[j]] = format_number(arr[i][keys[j]]);
+                        arr[keys[j]] = format_number(arr[keys[j]]);
                     }
                 }
-            }else{//是对象
-                for (var j=0;j<keys.length;j++){
-                    arr[keys[j]] = format_number(arr[keys[j]]);
+                return arr;
+            }
+
+
+            function format_number(n){
+                if(isNaN(Number(n))){ return 0;}
+                var b=parseFloat(n).toString();
+                var len=b.length;
+                var w = '', f = '' ;
+                // if(len>=7){
+                //     //大于7 要加 万字
+                //     w = '万';
+                //     f = '.' + ((b/10000).toFixed(2)).toString().split('.')[1];
+                //     b = b.slice(0,b.length-4);
+                //     len = b.length;
+                // }
+
+                if(len<=3){return b+f+w;}
+
+                var r=len%3,s = r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{3}/g).join(","):b.slice
+                (r,len).match(/\d{3}/g).join(",");
+
+                return s+f+w;
+            }
+
+
+            //转换数据 arr需要转换的数据   keys转换后字段名称(顺序和长度得与arrkey一致)   arrkey转换的字段名字(顺序和长度得与keys一致)
+            function tranData(arr,keys,arrkey) {
+                var a = [];
+                for (var i=0; i < arr.length;i++) {
+                    var o = {};
+                    for (var j=0; j < keys.length;j++) {
+                        o[keys[j]] = arr[i][arrkey[j]];
+                    }
+                    a.push(o)
                 }
-            }
-            return arr;
-        }
-
-
-        function format_number(n){
-            if(isNaN(Number(n))){ return 0;}
-            var b=parseInt(n).toString();
-            var len=b.length;
-            var w = '', f = '' ;
-            if(len>=7){
-                //大于7 要加 万字
-                w = '万';
-                f = '.' + ((b/10000).toFixed(2)).toString().split('.')[1];
-                b = b.slice(0,b.length-4);
-                len = b.length;
+                return a;
             }
 
-            if(len<=3){return b+f+w;}
-
-            var r=len%3,s = r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{3}/g).join(","):b.slice(r,len).match(/\d{3}/g).join(",");
-
-            return s+f+w;
-        }
-       
-
-        //转换数据 arr需要转换的数据   keys转换后字段名称(顺序和长度得与arrkey一致)   arrkey转换的字段名字(顺序和长度得与keys一致)
-        function tranData(arr,keys,arrkey) {
-            var a = [];
-            for (var i=0; i < arr.length;i++) {
-                var o = {};
-                for (var j=0; j < keys.length;j++) {
-                    o[keys[j]] = arr[i][arrkey[j]];
-                }
-                a.push(o)
-            }
-            return a;
-        }
-        
-        function objToArr(o,key) {
-            var arr = [];
-            for (var i=0; i < o.length;i++) {
-                for (var k in o[i]) {
-                    if (k == key) {
-                        arr.push(o[i][key]);
+            function objToArr(o,key) {
+                var arr = [];
+                for (var i=0; i < o.length;i++) {
+                    for (var k in o[i]) {
+                        if (k == key) {
+                            arr.push(o[i][key]);
+                        }
                     }
                 }
+                return arr;
             }
-            return arr;
-        }
 
-        function fullArr(length,val) {
-            var arr = [];
-            for (var i=0; i < length;i++) {
-                arr.push(val);
-            }
-            return arr;
-        }
-
-        //释放图标对象
-
-        function disposed(chart) {
-            if(chart!=null){//初始化值为null  不释放
-                //判断是否释放
-                if(!chart.isDisposed()){
-                    chart.dispose();
+            function fullArr(length,val) {
+                var arr = [];
+                for (var i=0; i < length;i++) {
+                    arr.push(val);
                 }
+                return arr;
             }
-        }
-
-        //时间段
-
 
 // script end
-    });
+        });
 
 </script>
 </html>
