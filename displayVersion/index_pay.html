@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="./css/map_dzjk.css">
+	<link rel="stylesheet" href="./css/index_pay.css">
 	<script type="text/javascript">
 	        //最优先 rem布局代码
 	        (function (d, w) {
@@ -25,8 +25,7 @@
 	</script>
 	<script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="./js/echarts.min.js"></script>
-    <script type="text/javascript" src="./js/template.js"></script>
-	<script type="text/javascript" src="./js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
 	<script type="text/javascript" >
 	    //地图对象
 	    echarts.extendsMap = function(id, opt){
@@ -430,256 +429,180 @@
 </head>
 <body>
 	<div class="bigbg">
-    <!-- 头部 -->
-    <div class="head">
-		<div class="head-bg">
-	        <img src="./images/h_l.png">
-	        <img src="./images/dzjk.png" style="width: 23%;padding:0 5%;">
-	        <img src="./images/h_r.png">
-		</div>
-        <!-- Timebtn -->
-  		<div class="time-container">
-				<div class="time-list-btns">
-					<a class="time-btn-act" href="javascript:;" data-flage="1" >本月</a>
-					<a href="javascript:;" data-flage="2" >本年</a>
-					<a href="javascript:;" data-flage="3" >最近7天</a>
-					<a href="javascript:;" data-flage="4">最近30天</a>
-				</div>
-
-				<div class="time-data">
-					<div class="time-input">
-							<input type="text" id="dateTime" name="" placeholder="请选择时间">
-					</div>
-					<div class="laydate-box" id="laydateBox">
-					</div>
-				</div>
-		</div>
-
-    </div>
-
-    <!-- 内容部 -->
-    <div class="main">
 		
-		<!-- 上部 -->
-		<div class="main-t">
+		<div class="main">  
 
-			<div class="main-t-l l">
-				<div class="main-list"  style="width:3.5rem;">
-
-                    <div class="h-1">
-                        <span>区域用卡量排行</span>
-                        <img src="./images/side1.png">
-                    </div>
-                     <div class="list-box">
-
-							<ul style="height: 4.6rem;width: 106%;margin-top:0.3rem; ">
-	                            <li class="list-h">
-	                            <span>排名</span>
-	                            <span>区域</span>
-	                            <span>用卡量</span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-	                            <li class="list-item">
-	                            <span><%=data[i].seq%></span>
-	                            <span><%=data[i].areaName%></span>
-	                            <span class="blue"><%=data[i].payNum%></span>
-	                            </li>
-                            </ul>
-
-                    </div>
-
-               	</div>
-
-				<!-- 饼图 -->
-
-
-				<div class="pie-l-box" id="pieBox" style="width: 100%;height: 4.4rem;">
-
-				</div>
-
-
+			<div class="main-h">
+				<p class="main-h-title">电子健康卡数据一览平台</p>
+				<p class="main-h-time"><img src="./images/time_icon.png"><span>2019年04月25日  04:24:18</span></p>
 			</div>
 
-			<div class="main-t-c l">
+			<!-- 左侧 -->
+			<div class="main-l l"> 
 				
-				   <div class="box-list"	>
+				<div class="main-l-box l">
+					<!--支付趋势（最近6月）  -->
+					<div class="mouth-box">
+						<p class="box-h">支付趋势（最近6月）</p>	
+					</div>
+					<!-- 支付趋势（最近7日） -->
+					<div class="day-box">
+						<p class="box-h">支付趋势（最近7日）</p>
+					</div>
+					
+					<!-- 区域用卡量排行（今日） -->
+					<div class="quantity-usage">
+						<p class="box-h">区域用卡量排行（今日）</p>
+								<ul class="quantity-list">
+									<li class="quantity-h">
+										<span>排名</span>
+										<span>区域</span>
+										<span>今日用卡量</span>
+									</li>
+									<li>
+										<span><small>1</small></span>
+										<span>宝安区</span>
+										<span>123123 231</span>
+									</li>
+									<li>
+										<span><small>2</small></span>
+										<span>宝安区</span>
+										<span>123123</span>
+									</li>
+									<li>
+										<span><small>3</small></span>
+										<span>宝安区</span>
+										<span>123123123123</span>
+									</li>
+									<li>
+										<span><small>4</small></span>
+										<span>宝安区</span>
+										<span></span>
+									</li>
+									<li>
+										<span><small>5</small></span>
+										<span>宝安区</span>
+										<span>123123123</span>
+									</li>
+									<li>
+										<span><small>6</small></span>
+										<span></span>
+										<span></span>
+									</li>
+									<li>
+										<span><small>7</small></span>
+										<span></span>
+										<span></span>
+									</li>
+									<li>
+										<span><small>8</small></span>
+										<span></span>
+										<span></span>
+									</li>
+									<li>
+										<span><small>9</small></span>
+										<span></span>
+										<span></span>
+									</li>
+									<li>
+										<span><small>10</small></span>
+										<span></span>
+										<span></span>
+									</li>
+								</ul>		
+					</div>
 
-                        <!-- 5个框  -->
-                        <div class="box-item l">
-                            <div class="box-item-t">发卡量</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                        </div>
+				</div><!-- main-l-box end -->
 
-                        <div class="box-item l">
-                            <div class="box-item-t">发卡上传量</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                        </div>
+				<div class="main-r-box r">
 
-                        <div class="box-item l" >
-                            <div class="box-item-t" >预制卡量</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                        </div>
-
-                        <div class="box-item l" style="margin-left: 0;" >
-                            <div class="box-item-t">用卡量</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                        </div>
-
-                        <div class="box-item l">
-                            <div class="box-item-t">用卡上传量</div>
-                            <div class="box-item-v blue l">1231231231</div>
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- 地图 -->
-                    <div class="map-box" id="mapBox">
-
-                        <!-- 4个角 -->
-                        <img style="top: 0;left: 0" src="./images/tl.png" alt="">
-                        <img style="bottom: 0;left: 0" src="./images/bl.png" alt="">
-                        <img style="right: 0;top: 0" src="./images/tr.png" alt="">
-                        <img style="right: 0;bottom: 0" src="./images/br.png" alt="">
-
-                        <div class="map-centent">
-
-                            <div class="map-chart " id="mapChart">
-
-                            </div>
-
-                        </div>
-
-                    </div>
-					<!-- 地图end -->
-
-					<div class="main-c-b">
-
-						<!-- 漏斗图 -->
-						<div class="main-b-l l">
-							<div class="h-1">
-		                        <span>发卡渠道分布</span>
-		                        <img src="./images/side1.png">
-		                    </div>
-							
-							<div id="funnelChart" class="funnel-box" style="height: 2.6rem;"></div>
+					<div class="box-item">
+						<div class="item-t">
+							<div class="l">
+								<p class="item-h">总发卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
+							<div class="l">
+								<p class="item-h">本月发卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
+							<div class="l">
+								<p class="item-h">今日发卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
 
 						</div>
-						<!-- 漏斗图end -->
+						<div class="item-b">
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+						</div>
+					</div>
 
-						<!-- 环形图 -->
-						<div class="main-b-r r">
-							<div class="h-1">
-		                        <span>用卡场景占比</span>
-		                        <img src="./images/side1.png">
-		                    </div>
-
-		                    <div id="ringChart" class="ring-box" style="height: 2.6rem;"></div>
+					<div class="box-item">
+						<div class="item-t">
+							<div class="l">
+								<p class="item-h">总用卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
+							<div class="l">
+								<p class="item-h">本月用卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
+							<div class="l">
+								<p class="item-h">今日用卡量</p>
+								<p class="item-v">1,234,567,234</p>
+							</div>
 
 						</div>
-						<!-- 环形图end -->
-
+						<div class="item-b">
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+							<div class="item-upload l">
+							（上传量 <span>123,234,234</span>）
+							</div>
+						</div>
 					</div>
 
 
-			</div>
+					<!-- 深圳地图 -->
+					<div class="map">深圳地图</div>
 
-			<div class="main-t-r r">
-				
 
-				  <!--上部右侧  -->
-                <div class="main-list l" >
-                    <div class="h-1">
-                        <span>区域机构数量</span>
-                        <img src="./images/side1.png">
-                    </div>
+				</div><!--main-r-box end-->
 
-                    <div class="list-box" style="width: 100%;height:4.4rem;" id="horizontal1">
-
-                    </div>
-
-                </div>
-
-                <div class="main-list r" >
-                    <div class="h-1">
-                        <span>区域机构数量</span>
-                        <img src="./images/side1.png">
-                    </div>
-
-                    <div class="list-box" style="width: 100%;height:4.4rem;margin-top:0.2rem; " id="horizontal2">
-
-                    </div>
-
-                </div>
 
 
 			</div>
 
-		</div>	
+			<!-- 右侧 -->
+			<div class="main-r r">
 
-  	</div><!--main end-->
+				<div class="main-r-container">
+					<div class="chart-box">
+						<p class="box-h">医院用卡量排行（今日）</p>	
+					</div>
 
+					<div class="chart-box">
+						<p class="box-h">医院发卡量排行（今日）</p>	
+					</div>
+				</div>
 
+			</div>
+			
+		</div>
+
+	</div>
 </body>
 <script type="text/javascript">
 
@@ -707,130 +630,7 @@ if (typeof Object.assign != 'function') {
   };
 }
 
-// 返回相对日期 format: 'yyyy-MM-dd'
-	var endDate = function (d,opt) {
-		opt = opt || {};
-		this._millisecond = 1000 * 60 * 60 * 24;//一天的时间
-		this._basis = (typeof d) == 'string' ?  new Date(d.replace('-','/')) : d;
-		this.format = opt.format || '-' ;
-		this._full = opt.full === false ? false : ( opt.full || '0' ) ;//是否单数补0 默认0
-	}
-	endDate.prototype.y = function (d){
-		d = d || null;
-		if(d && (typeof d) != 'string'){
-			return  d.getFullYear();
-		}
-		return null;
-	}
-	endDate.prototype.m = function (d){
-		d = d || null;
-		if(d && (typeof d) != 'string' ){
-			return  (d.getMonth()+1);
-		}
-		return null;
-	}
-	endDate.prototype.d = function (d){
-		d = d || null;
-		if(d && (typeof d) != 'string'){
-			return  d.getDate();
-		}
-		return null;
-	}
-	endDate.prototype.formatDate = function (d,format){
-		if(format != undefined || format != null){
-			format = format;
-		}else{
-			format = this.format;
-		}
-		d = d || null;
-		if(d && (typeof d) != 'string' ){
-			if(this._full){
-				return  this.y(d)+format+( this.m(d) < 10 ? this._full+this.m(d) : this.m(d) ) +format+ ( this.d(d) < 10 ? this._full+this.d(d) : this.d(d) );
-			}else{
-				return  this.y(d)+format+this.m(d) +format+this.d(d);
-			}
-		}
-		return null;
-	}
-	endDate.prototype.days = function (type,format,d){
-		//获取指定天数的日期 正为后 负为前
-			d = d || this._basis;
-			if(format != undefined || format != null){
-				format = format;
-			}else{
-				format = this.format;
-			}
-			if(d && (typeof d) != 'string'){
-				var t = null;
-				if(type < 0){ //往前算得 加一天
-					t = new Date(d.getTime()+this._millisecond);
-					t.setDate(this.d(t)+type);
-					return this.formatDate(t,format);
-				}else{
-					//往前算得 减一天
-					t = new Date(d.getTime()-this._millisecond);
-					t.setDate(this.d(t)+type);
-					return this.formatDate(t,format);
-				}
 
-			}
-			return null;
-		}
-	endDate.prototype.thisMonth = function (format,d){
-		//获取指定日期 的本月起至时间  array
-			d = d || this._basis;
-			if(format != undefined || format != null){
-				format = format;
-			}else{
-				format = this.format;
-			}
-			if(d && (typeof d) != 'string'){
-				var starAndEnd = [];
-				//获取指定时间的月份,时间,年份,本月第一天
-				var currentMonth = d.getMonth(),currentDate = this.d(d),currentYear = this.y(d)
-				,firstDay = new Date(currentYear,currentMonth,1);//本月第一天 
-
-				//12月的时候年份需要加1,月份需要为0,也就是明年1月份
-				if(currentMonth == 11){
-					currentYear++;
-					currentMonth=0;
-				}else{
-					//否者月份加1,以便求的下一月的第一天 
-					currentMonth++;
-				}
-				var nextMonthFristDay = new Date(currentYear,currentMonth,1);
-				var lastDay = new Date(nextMonthFristDay.getTime()-this._millisecond);//下个月第一天 减去1天 求得上个月 最后一天
-
-				starAndEnd.push(this.formatDate(firstDay,format));
-				starAndEnd.push(this.formatDate(lastDay,format));
-				return starAndEnd;
-			}
-			return null;
-		}
-
-	endDate.prototype.thisYear = function (format,d){
-				//获取指定日期 的本年的起止日期  array
-					d = d || this._basis;
-					if(format != undefined || format != null){
-						format = format;
-					}else{
-						format = this.format;
-					}
-					if(d && (typeof d) != 'string'){
-						var starAndEnd = [],currentYear = this.y(d);
-
-						 //本年第一天 
-				        var currentYearFirstDate = new Date(currentYear, 0, 1);
-				        //本年最后一天 
-				        var currentYearLastDate = new Date(currentYear, 11, 31);
-				        //添加至数组
-						starAndEnd.push(this.formatDate(currentYearFirstDate,format));
-						starAndEnd.push(this.formatDate(currentYearLastDate,format));
-						return starAndEnd;
-					}
-					return null;
-				}
-//endDate end
 
 
 //获取时间字符串
@@ -844,8 +644,6 @@ function getinputDate(d,formatDate){
 
 // 页面代码
     $(function () {
-
-
     	//加载图
         var load =function (padding) {
             return '<img src="./images/load.gif" style="display: block;width: 0.5rem;margin:0 auto;padding:'+padding+'" alt="">';
@@ -853,7 +651,6 @@ function getinputDate(d,formatDate){
         var lineDataMax = 200000;//柱状图阴影最大值预设  社康支付 和 医院支付
         var payMax = 1000000;//柱状图阴影最大值预设 支付宝 和 微信支付
         var mapChart = null;//地图对象
-        var pieChart=null;//饼图
         var columnarChart3 = null;//社康渠道分布
         var columnarChart1=null;//社康机构支付排行
         var columnarChart2=null;//社康支付医院排行
@@ -900,289 +697,13 @@ function getinputDate(d,formatDate){
 
 
 
-// deomo  
-var pieBox = null;
-disposed(pieBox);
-pieBox = echarts.init(document.getElementById('pieBox'));
-pieBox.setOption(pieOption({
-                            name : '区域用卡量排行',
-                            formatter :function(params){ return params.name+'<br>支付笔数:'+ params.value; }
-                            ,data:[{name:'龙华区',value:11}]
-                            ,legend: {
-                            	bottom:0,
-			                    textStyle:{
-			                        color:'#fff',
-			                        fontSize:8
-			                    },
-			                    itemWidth : 10,
-			                    itemHeight : 10
-			                }
-                        }));
+        //initPage();
 
 
-// 环形图
-var  ringChart = null;
-ringChart = echarts.init(document.getElementById('ringChart'));
-ringChart.setOption(pieOption({
-                            name : '发卡渠道分布',
-                            formatter :function(params){ return params.name+'<br>支付笔数:'+ params.value; }
-                            ,data:[{name:'龙华区',value:11}]
-                            ,radius:['50%', '80%']
-                        }));
-
-
-
-
-
-//漏斗图
-var option3 = {
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c}"
-    },
-    legend: {
-		left:0,
-	    textStyle:{
-	        color:'#fff',
-	        fontSize:8
-	    },
-	    itemWidth : 10,
-	    itemHeight : 10
-	},
-    calculable: true,
-    series: [
-        {
-            name:'漏斗图',
-            type:'funnel',
-            top:30,
-            left:0,
-            gap: 0,
-            height: '80%',
-            width: '80%',
-            label: {
-                show: true,
-                // position: 'inside',
-                fontSize :'10',
-                formatter:function(v){
-                    return v.name+'\n\n'+v.value+'张';
-                },
-            },
-            itemStyle: {
-                borderWidth: 0,
-            },
-            data: [
-                {value: 1360, name: '健康深圳APP'
-	                ,itemStyle:{
-	                	color:'#3a7cd5'
-	                }
-            	},
-                {value: 552, name: '深圳卫计委公众号'
-	                ,itemStyle:{
-		                	color:'#159a8c'
-		                }
-            	},
-                {value: 201, name: '医院自助机'
-                	,itemStyle:{
-	                	color:'#474dad'
-	                }
-            	},
-            ]
-        }
-    ]
-};
-
-
-var funnelChart=echarts.init(document.getElementById('funnelChart'));
-funnelChart.setOption(option3);
-
-
-
-
-
-//横向图标
-
-var option2 = {
-    // title: {
-    //     text: '世界人口总量',
-    //     subtext: '数据来自网络'
-    // },
-    tooltip: {
-        trigger : 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    // legend: {
-    //     data: ['2012年'],
-    //     left: 0,
-    //     top: 0,
-    //    	textStyle:{
-	   //      color:'#fff',
-	   //      fontSize:10
-	   //  },
-	   //  itemWidth : 20,
-	   //  itemHeight : 10
-    // },
-    grid: {
-        left: '0%',
-        right: '4%',
-        top: '7%',
-        width:'100%',
-        height: '90%',
-        containLabel: true
-    },
-    xAxis: {
-        show:false,
-    },
-    yAxis: {
-        type: 'category',
-        data: ['巴西','印尼','美国','印度','中国','世界人口(万)','美国2','印度2','中国2','世界人口(万)2'],
-                type: 'category',
-        axisLabel: {
-            color: '#a5a7af',
-            formatter: function(value) {
-                //富文本固定格式{colorName|这里填你想要写的内容}
-                return value
-            },
-            fontSize: 10,
-            padding: [5, 5, 5, 5]
-        },
-        axisTick: {
-            show: false, //隐藏Y轴刻度
-        },
-        axisLine: {
-            show: false, //隐藏Y轴线段
-        },
-    },
-    series: [
-        {
-            show: true,
-            type: 'bar',
-            barGap: '-100%',
-            itemStyle: {
-                normal: {
-                    color: 'rgba(0,0,0,0.1)'
-                },
-            },
-            tooltip: {
-                show:false
-            },
-            z: 1,
-            data: [999999, 999999, 999999, 999999, 999999, 999999, 999999, 999999, 999999, 999999]
-        },
-        {
-            name: '2012年',
-            type: 'bar',
-            z:2,
-           itemStyle: {
-                normal: {
-                    color: {
-                        colorStops: [{
-                             offset: 0,
-                             color: '#3dc0e9' // 0% 处的颜色
-                         }, {
-                             offset: 1,
-                             color: '#45e3cf' // 100% 处的颜色
-                         }],
-                        globalCoord: false, // 缺省为 false
-
-                    }
-                },
-            },
-            label: {
-                normal: {
-                    show: true,
-                    textStyle: {
-                        color: '#fff', //百分比颜色
-                    },
-                    position: 'right',
-                    //百分比格式
-                    formatter: function(data) {
-                        return data.value;
-                    },
-                }
-            },
-            data: [19325, 23438, 31000, 121594, 134141, 681807, 31000, 999999, 134141, 681807]
-        }
-    ]
-};
-var horizontal1=echarts.init(document.getElementById('horizontal1'));
-horizontal1.setOption(option2);
-
-var horizontal2=echarts.init(document.getElementById('horizontal2'));
-horizontal2.setOption(option2);
-
-
-
-
-// demo 
-
-
-//切换时间段
-		var zuotian = new Date(new Date().getTime() - 24*60*60*1000);//昨天的时间
-		var zuotianStr = zuotian.getFullYear() +'-'+ (zuotian.getMonth()+1) +'-'+ zuotian.getDate() ;
-		var endDateObj = new  endDate(zuotian);
-		$('#dateTime').val(endDateObj.thisMonth()[0] + ' 至 ' + zuotianStr );//设置默认时间 为本月时间
-
-		console.log('不要分隔符',endDateObj.thisMonth('')[0],endDateObj.formatDate(zuotian,''))//不要分隔符
-
-	    var datelay = laydate.render({
-		  elem: '#laydateBox'
-		  ,range: '至'
-		  ,format: 'yyyy-MM-dd'
-		  ,theme: '#0a2340'
-		  ,position: 'static'
-		  ,max: zuotianStr
-		  ,showBottom: false //按钮不可以自定义
-		  // ,ready: function(){
-		  //   datelay.hint('日期可选有效时间设定在 <br>'+ zuotianStr +'之前');
-		  // }
-		  ,change: function(value, date){ //监听日期被切换
-		   		$('#dateTime').val(value);
-		   		var inputDate = getinputDate(value,'至');
-		   		initPage(inputDate[0],inputDate[1]);
-		   		console.log(inputDate);
-		  }
-		}); 
-
-//初始化页面 默认本月
-		var endT = getinputDate($('#dateTime').val(),'至');
-        initPage(endT[0],endT[1]);
-
-//1:本月 2:本年 3:最近7天 4:最近30天   
-
-$('.time-list-btns').on('click','a',function(){
-	var flage = $(this).attr('data-flage').toString();
-	$('.time-btn-act').removeClass('time-btn-act');
-	$(this).addClass('time-btn-act');
-	
-	switch(flage){
-		case '1' : console.log(flage);  
-				$('#dateTime').val(endDateObj.thisMonth()[0] + ' 至 ' +  zuotianStr );
-		break;
-
-		case '2' : console.log(flage);  
-				$('#dateTime').val(endDateObj.thisYear()[0] + ' 至 ' +  zuotianStr );
-		break;
-
-		case '3' : console.log(flage);
-				$('#dateTime').val( endDateObj.days(-7) + ' 至 ' +  zuotianStr );
-		break;
-
-		case '4' : console.log(flage);  
-				$('#dateTime').val( endDateObj.days(-30) + ' 至 ' +  zuotianStr );
-
-		break;
-	}
-	var inputDate = getinputDate($('#dateTime').val(),'至');
-	initPage(inputDate[0],inputDate[1]);
-	console.log(inputDate);
-
-});
 	    
 
-//初始化函数 API更新为传这个两个字段startTime和endTime
-        function initPage(startTime,endTime) {
+//初始化函数 
+        function initPage() {
 
 
             //初始化地图
@@ -1202,9 +723,7 @@ $('.time-list-btns').on('click','a',function(){
                 //]
             });
 
-            //初始饼图
-            disposed(pieChart);
-            pieChart = echarts.init(document.getElementById('pieChart'));
+
 
             //社康渠道分布
             disposed(columnarChart3);
@@ -1234,14 +753,9 @@ $('.time-list-btns').on('click','a',function(){
                         $('#regionalPayment').html(load('1.5rem 0'));
                         $('#boxList').html(load('0.65rem 0'));
                         mapChart.showLoading(chartLoadConfig);//显示地图加载动画
-                        pieChart.showLoading(chartLoadConfig);//饼图地图加载动画
                         columnarChart3.showLoading(chartLoadConfig);//社康渠道分布
                         columnarChart1.showLoading(chartLoadConfig);//社康机构支付排行
                         columnarChart2.showLoading(chartLoadConfig);//社康支付医院排行
-                    },
-                    data: {
-                    	startDate:startTime,
-                    	startDate:endTime
                     },
                     success: function (ret) {
                         console.log(ret);
@@ -1267,13 +781,7 @@ $('.time-list-btns').on('click','a',function(){
                         mapChart.hideLoading();//关闭地图加载动画
                         mapChart.setData(tranData(areaPayStat, ['name', 'payNum', 'payAmt'], ['areaName', 'payNum', 'payAmt']));//异步更新地图数据
 
-                        //加载饼图
-                        pieChart.hideLoading();//关闭地图加载动画
-                        pieChart.setOption(pieOption({
-                            name : '当前区支付排行统计',
-                            formatter :function(params){ return params.name+'<br>支付笔数:'+ params.value; },
-                            data:tranData(areaPayStat, ['name', 'value'], ['areaName', 'payNum'])
-                        }));
+
 
 
                         //加载社康渠道分布 柱状是支付笔数，折线是支付金额
@@ -1349,87 +857,6 @@ $('.time-list-btns').on('click','a',function(){
         }
 
 
-//pie 饼图   opt.name : 深圳区域数据;  opt.formatter "{a} <br/>{b} : {c} ({d}%)" || fn;  opt.data : []
-        function pieOption(opt) {
-            var data = [];
-            if(opt.data){
-                data = [
-                    {value: 0, name: '龙华区', itemStyle: {color: cityConfig['龙华区'].color}},
-                    {value: 0, name: '福田区', itemStyle: {color: cityConfig['福田区'].color}},
-                    {value: 0, name: '宝安区', itemStyle: {color: cityConfig['宝安区'].color}},
-                    {value: 0, name: '龙岗区', itemStyle: {color: cityConfig['龙岗区'].color}},
-                    {value: 0, name: '盐田区', itemStyle: {color: cityConfig['盐田区'].color}},
-                    {value: 0, name: '坪山区', itemStyle: {color: cityConfig['坪山区'].color}},
-                    {value: 0, name: '南山区', itemStyle: {color: cityConfig['南山区'].color}},
-                    {value: 0, name: '大鹏新区', itemStyle: {color: cityConfig['大鹏新区'].color}},
-                    {value: 0, name: '罗湖区', itemStyle: {color: cityConfig['罗湖区'].color}},
-                    {
-                        value: 0,
-                        name: '光明新区',
-                        itemStyle: {
-                            color: cityConfig['光明新区'].color
-                        }
-                    },
-                ];
-
-                for (var i = 0; i<data.length ; i++) {
-                    for (var j = 0; j<opt.data.length ; j++) {
-                        var d = opt.data[j]
-                        if(data[i].name == d.name ){
-                            data[i].value =  d.value;
-                        }
-
-                    }
-                }
-
-            }
-
-
-            var pie = {
-                tooltip: {
-                    trigger: 'item',
-                    textStyle: {
-                        color: '#fff'
-                    },
-                    formatter: opt.formatter || ''
-                },
-                series: [
-                    {
-                        name: opt.name,
-                        label: {
-                            show: true,
-                            position: 'outside',
-                            fontSize: 10,
-                        },
-                        type: 'pie',
-                        radius: '60%',
-                        data: data,
-                        labelLine: {
-                            length: 6,
-                            length2: 4
-                        },
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            };
-
-    // 如果是环形
-            if(opt.radius){
-            	pie.series[0].radius = opt.radius;
-            }
-    //
-    if(opt.legend){
-    	pie.legend = opt.legend;
-    }
-
-            return pie;
-        }
 
 //折柱混合
         function columnarChartOption (opt){
@@ -1681,7 +1108,7 @@ $('.time-list-btns').on('click','a',function(){
                 arr.push(val);
             }
             return arr;
-        }	
+        }
 
         //释放图标对象
 

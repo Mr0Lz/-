@@ -140,9 +140,6 @@ select::-ms-expand ,option::-ms-expand {
     padding:0 0.24rem 0.24rem 0.24rem;
     font-size: 0.16rem;
 }
-.main-t>div{
-    float: left;
-}
 /*列表*/
 .h-1{
     font-size: 0.2rem;
@@ -159,23 +156,22 @@ select::-ms-expand ,option::-ms-expand {
 .list-box{
     overflow: hidden;
     position:relative;
-    padding-top: 0.34rem;
 }
 .main-list ul,.main-r-list ul{
     display: block;
     overflow-y: auto;
 }
-.main-list li span:first-child {
-    text-align: left;
-    width: 16%;
-}
 .main-list li span{
     display: inline-block;
-    width:25%;
+    width:33%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
+}
+.main-list li span:first-child {
+    text-align: left;
+    width: 20%;
 }
 .list-h{
     display: block;
@@ -184,15 +180,14 @@ select::-ms-expand ,option::-ms-expand {
     top: 0;
     left: 0;
     font-size: 0.16rem;
-    padding-bottom: 0.12rem;
     color: #a5a7ac;
 }
 
 
 /*电子健康卡*/
 .main-t-c{
-    width: 10.67rem;
-    margin-left: 0.24rem;
+    width: 10.6rem;
+    margin-left: 0.2rem;
 }
 .box-list{
     margin-top: 0.2rem;
@@ -230,7 +225,7 @@ select::-ms-expand ,option::-ms-expand {
 /*深圳地图*/
 .map-box{
     width:100%;
-    height: 3.64rem;
+    height: 3.5rem;
     position: relative;
 }
 .map-box img{
@@ -251,5 +246,20 @@ select::-ms-expand ,option::-ms-expand {
 /*上部 右侧*/
 .main-t-r{
     width: 4rem;
-    margin-left: 0.2rem;
+}
+
+/*漏斗图*/
+.main-c-b{
+    margin-top: 0.2rem;   
+        -webkit-box-shadow: 0 0 14px #0e59a0;
+    -ms-box-shadow: 0 0 14px #0e59a0;
+    -moz-box-shadow: 0 0 14px #0e59a0;
+    box-shadow: 0 0 14px #0e59a0;
+}
+.main-b-l,.main-b-r{
+    margin:2% 2% 0 2%;
+    width: 44%;
+}
+.funnel-box,.ring-box{
+    width: 100%;
 }
